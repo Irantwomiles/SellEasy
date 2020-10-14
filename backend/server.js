@@ -8,7 +8,8 @@ const bodyParser = require('body-parser')
 
 const mongoose = require('mongoose')
 
-// const postRouter = require('./routes/post')
+const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
 
 const app = express()
 
@@ -16,10 +17,15 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-// app.use('/api', postRouter)
+app.use('/api', authRouter);
+app.use('/api', userRouter);
 
 app.post('/', function(req, res) {
     res.sendStatus(200)
+})
+
+app.get('/api', function(req, res) {
+    res.send("Nothing here, move along!");
 })
 
 
