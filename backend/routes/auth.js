@@ -25,8 +25,6 @@ authRouter.post('/login', function(req, res) {
 
         let user = result[0];
 
-        console.log(user.password);
-
         bcrypt.compare(password, user.password, (err, matched) => {
             if(err) {
                 res.send({status: 403, message: "error while checking credentials."});
