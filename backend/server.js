@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
+const postRouter = require('./routes/post');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/api', authRouter);
 app.use('/api', userRouter);
+app.use('/api/post', postRouter);
 
 app.post('/', function(req, res) {
     res.sendStatus(200);

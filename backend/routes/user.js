@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const userRouter = express.Router();
 const User = require('../models/User');
+const Tokens = require('../models/Tokens');
 
 userRouter.post('/create', function(req, res) {
 
@@ -18,10 +19,6 @@ userRouter.post('/create', function(req, res) {
         res.send({status: 401, message: "all fields must be filled out."});
         return;
     }
-
-    /**
-     * Hash the password
-     */
 
     User.find({email: email}, (err, result) => {
 
@@ -56,7 +53,7 @@ userRouter.post('/create', function(req, res) {
 
 userRouter.post('/delete', function(req, res) {
 
-    // Create a user here
+    // Delete a user here
     res.send({status: 200, token: "delete user goes here"});
 
 });

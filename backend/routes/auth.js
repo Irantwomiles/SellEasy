@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../utils');
 const authRouter = express.Router();
 const User = require('../models/User');
+const Tokens = require('../models/Tokens');
 
 authRouter.post('/login', function(req, res) {
 
@@ -35,11 +36,37 @@ authRouter.post('/login', function(req, res) {
 
             if(matched) {
 
-                let user = { email: email };
-                let token = jwt.sign(user, jwtSecret());
+                Tokens.find({email: email}, (err, result) => {
+                    if(err) {
+                        res.send({status: 500, message: "server error."});
+                        return;
+                    }
 
-                res.send({status: 200, token: token, message: "logged in."});
-                return;
+                    //User is already logged in
+                    if(result.length > 0) {
+                        res.send({status: 401, message: "you are already logged in."});
+                        return;
+                    } else {
+                        let user = { email: email };
+                        let token = jwt.sign(user, jwtSecret());
+        
+                        let newToken = new Tokens({
+                            email: email,
+                            token: token
+                        })
+        
+                        newToken.save(function(err) {
+                            if(err) {
+                                res.send({status: 500, message: "error while creating login token."});
+                                return;
+                            }
+                            
+                            res.send({status: 200, token: token, message: "logged in 2."});
+                            return;
+                        })
+                    }
+                });
+
             } else {
                 res.send({status: 403, message: "username and/or password was incorrect."});
                 return;
@@ -57,7 +84,28 @@ authRouter.post('/logout', autheticateToken, function(req, res) {
 
     // We now have access to req.user from jwt
 
-    res.send({status: 200, token: "logout token-goes-here"});
+    let token = req.token;
+    let email = req.user.email;
+
+    Tokens.find({email: email, token: token}, (err, result) => {
+        if(err) return res.sendStatus(500);
+
+        if(result.length > 0) {
+            Tokens.deleteMany({email: email, token: token}, (err1, result1) => {
+                if(err1) return res.sendStatus(500);
+        
+                console.log("Result1: ", result1);
+
+                res.send({status: 200, message: "logged out successfully"});
+                return;
+            })
+        } else {
+            res.send({status: 403, message: "you can't do that"});
+            return;
+        }
+    })
+
+   
 
 });
 
@@ -68,10 +116,22 @@ function autheticateToken(req, res, next) {
     if(token == null) return res.sendStatus(401);
 
     jwt.verify(token, jwtSecret(), (error, user) => {
-        if(err) return res.sendStatus(403);
+        if(error) return res.sendStatus(403);
 
-        req.user = user;
-        next();
+        console.log("USER:", user);
+
+        Tokens.find({email: user.email, token: token}, (err, result) => {
+            if(err) return res.sendStatus(500);
+
+            if(result.length > 0) {
+                req.user = user;
+                req.token = token;
+                next();
+            } else {
+                res.send({status: 403, message: "You are not logged in"});
+                return;
+            }
+        })
     })
 }
 
