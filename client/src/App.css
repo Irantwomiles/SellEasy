@@ -1,0 +1,13 @@
+.topline {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.welcome {
+    margin-right: 50px;
+}
+
+.searchbar {
+    margin-top: 0px;
+}
