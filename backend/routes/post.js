@@ -68,13 +68,11 @@ postRouter.get('/latest/:zipcode', function(req, res) {
     
     let zipcode = req.params.zipcode;
 
-    console.log(zipcode);
-
     if(zipcode) {
         Posts.find({zip: Number.parseInt(zipcode)}, null, {sort: {createdAt: -1}}, (error, result) => {
             if(error) return res.send({status: 500, message: "error while fetching latest posts"});
 
-            res.send({status: 200, data: result, message: "got latest results"});
+            res.send(result);
 
         }).limit(100);
     } else {

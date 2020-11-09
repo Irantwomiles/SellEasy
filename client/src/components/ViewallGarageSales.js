@@ -1,34 +1,60 @@
 import React, {useState, useEffect} from 'react';
-
-function Gsale(item, cost, zip){
-    this.item = item
-    this.cost = cost
-    this.zip = zip
-}
-const fakeData = [new Gsale("grill", 400, 32901), new Gsale("firstborn son", 50, 70770), new Gsale("cheeto shaped like dorito", 9000, 27514)];
-
-
-
-function Gsale(item, cost, zip){
-    this.item = item
-    this.cost = cost
-    this.zip = zip
-}
-const fakeData = [new Gsale("grill", 400, 32901), new Gsale("firstborn son", 50, 70770), new Gsale("cheeto shaped like dorito", 9000, 27514)];
+import axios from 'axios';
 
 function ViewallGarageSales(){
-    data = fakeData
+    
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [zipcode, setZipcode] = useState();
+
+    const GET_RECENT_DATA_URL = "http://localhost:5000/api/post/latest/27215";
+
+    useEffect(() => {
+
+        // setZipcode(27215);
+
+        (async () => {
+
+            let result = await axios.get(GET_RECENT_DATA_URL);
+           
+            if(result.status === 200) {
+                
+                setData(result.data);
+                setLoading(false);
+
+            }
+
+        })();
+
+    }, []);
+    
+    useEffect(() => {
+
+        for(let i = 0; i < data.length; i++) {
+            console.log(data[i].email, data[i].items);
+        }
+
+    }, [data])
+
     return (
         <div>
-            {
-                data.map( (sale) => (
-                    <GarageSale
-                    item={sale.item}
-                    cost={sale.cost}
-                    zip={sale.zip}
-                    />
-                ))
+           {
+            loading ? "" :
+            
+            data.map( (item) => (
+        
+                <div key={item._id}>
+                    <span>{item.email}</span>
+                    <span>{item.description}</span>
+                    <span>{item.zip}</span>
+                    <span>{}</span>
+                </div>
+  
+            ))
+      
             }
         </div>
     ) 
 }
+
+export default ViewallGarageSales;
