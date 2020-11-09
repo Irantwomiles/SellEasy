@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import GarageSale from './GarageSale';
+import { Card } from 'react-bootstrap';
 
 function ViewallGarageSales(){
     
@@ -37,19 +39,19 @@ function ViewallGarageSales(){
     }, [data])
 
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'row', marginLeft: '10%', marginRight: '10%'}}>
            {
             loading ? "" :
             
             data.map( (item) => (
         
-                <div key={item._id}>
-                    <span>{item.email}</span>
-                    <span>{item.description}</span>
-                    <span>{item.zip}</span>
-                    <span>{}</span>
-                </div>
-  
+                <Card style={{minWidth: '18rem', width: '18rem', overflow: 'auto'}}>
+                    <Card.Body>
+                        <Card.Title>{item.email}</Card.Title>
+                        <Card.Text>{item.description}</Card.Text>
+                    </Card.Body>
+                </Card>
+                
             ))
       
             }

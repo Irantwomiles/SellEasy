@@ -1,10 +1,8 @@
 import React from 'react';
 
-
-
 function GarageSale(props){
     return (
-        <div className = "senasNewGirlfriend">
+        <div className="senasNewGirlfriend">
             <div>
                 <h1>{props.item}</h1>
             </div>
