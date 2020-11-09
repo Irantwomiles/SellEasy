@@ -12,14 +12,16 @@ postRouter.post('/create', autheticateToken, function(req, res) {
     let description = req.body.description;
     let items = req.body.items;
     let zip = req.body.zip;
+    let createdAt = req.body.createdAt;
 
-    if(email && description && items && zip) {
+    if(email && description && items && zip && createdAt) {
 
         let post = new Posts({
             email: email,
             description: description,
             items: items,
-            zip: zip
+            zip: zip,
+            createdAt: new Date().getTime()
         })
 
         post.save(function(error, doc) {
@@ -27,7 +29,7 @@ postRouter.post('/create', autheticateToken, function(req, res) {
                 return res.send({status: 401, message: "error while creating new post"});
             }
 
-            res.send({status: 201, data: {email: email, description: description, items: items, zip: zip, id: doc.id}, message: "new post created successfully!"});
+            res.send({status: 201, data: {email: email, description: description, items: items, zip: zip, createdAt: createdAt, id: doc.id}, message: "new post created successfully!"});
             return;
         })
 
