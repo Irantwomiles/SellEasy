@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 const Tokens = require('../models/Tokens');
 const Posts = require('../models/Posts');
 
-postRouter.post('/create', autheticateToken, function(req, res) {
+postRouter.post('/create', authenticateToken, function(req, res) {
+    
     // Create Post
 
     let email = req.user.email;
@@ -41,11 +42,11 @@ postRouter.post('/delete/:id', function(req, res) {
 
 })
 
-postRouter.get('/get/:id', function(req, res) {
+postRouter.get('/get/:id', authenticateToken, function(req, res) {
 
 })
 
-function autheticateToken(req, res, next) {
+function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 

@@ -77,7 +77,7 @@ authRouter.post('/login', function(req, res) {
 
 });
 
-authRouter.post('/logout', autheticateToken, function(req, res) {
+authRouter.post('/logout', authenticateToken, function(req, res) {
 
     // Handle user logout here
     // Return 200 if success and remove JWT token
@@ -109,7 +109,7 @@ authRouter.post('/logout', autheticateToken, function(req, res) {
 
 });
 
-function autheticateToken(req, res, next) {
+function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
