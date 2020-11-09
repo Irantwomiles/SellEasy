@@ -11,3 +11,12 @@
 .searchbar {
     margin-top: 0px;
 }
+
+#searchbar {
+    width: 400px;
+    /* margin-right: 100px; */
+}
+
+form {
+    margin-right: 10px;
+}
