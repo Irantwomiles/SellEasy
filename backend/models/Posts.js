@@ -9,8 +9,8 @@ const schema = new Schema({
         price: {type: String},
         sold: {type: Boolean}
     }],
-    zip: {type: String},
-    createdAt: {type: String}
+    zip: {type: Number},
+    createdAt: {type: Number}
 });
 
 module.exports = mongoose.model("Posts", schema);

@@ -6,23 +6,22 @@ const Tokens = require('../models/Tokens');
 const Posts = require('../models/Posts');
 
 postRouter.post('/create', authenticateToken, function(req, res) {
-    
-    // Create Post
 
     let email = req.user.email;
     let description = req.body.description;
     let items = req.body.items;
     let zip = req.body.zip;
-    let createdAt = req.body.createdAt;
-
-    if(email && description && items && zip && createdAt) {
-
+    
+    if(email && description && items && zip) {
+        
+        let createdAt = new Date().getTime();
+        
         let post = new Posts({
             email: email,
             description: description,
             items: items,
             zip: zip,
-            createdAt: new Date().getTime()
+            createdAt: createdAt
         })
 
         post.save(function(error, doc) {
@@ -34,6 +33,8 @@ postRouter.post('/create', authenticateToken, function(req, res) {
             return;
         })
 
+    } else {
+        return res.send({status: 401, message: "invalid values for create route"});
     }
   
 })
@@ -42,7 +43,29 @@ postRouter.post('/delete/:id', function(req, res) {
 
 })
 
-postRouter.get('/get/:id', authenticateToken, function(req, res) {
+postRouter.get('/get/:id', function(req, res) {
+    res.send("Get request");
+})
+
+postRouter.get('/latest/:zipcode', function(req, res) {
+    
+    let zipcode = req.params.zipcode;
+
+    console.log(zipcode);
+
+    if(zipcode) {
+        Posts.find({zip: Number.parseInt(zipcode)}, null, {sort: {createdAt: -1}}, (error, result) => {
+            if(error) return res.send({status: 500, message: "error while fetching latest posts"});
+
+            res.send({status: 200, data: result, message: "got latest results"});
+
+        }).limit(100);
+    } else {
+        res.send({status: 400, message: "missing zipcode"});
+        return;
+    }
+
+    
 
 })
 

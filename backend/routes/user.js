@@ -14,8 +14,9 @@ userRouter.post('/create', function(req, res) {
     let lastName = req.body.lastName;
     let email = req.body.email;
     let password = req.body.password;
+    let zip = req.body.zip;
 
-    if(firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0) {
+    if(firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0 || zip.length === 0) {
         res.send({status: 401, message: "all fields must be filled out."});
         return;
     }
@@ -33,7 +34,8 @@ userRouter.post('/create', function(req, res) {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: hash
+                password: hash,
+                zip: Number.parseInt(zip)
             });
     
             user.save(function(err) {
