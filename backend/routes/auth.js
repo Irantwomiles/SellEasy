@@ -118,8 +118,6 @@ function autheticateToken(req, res, next) {
     jwt.verify(token, jwtSecret(), (error, user) => {
         if(error) return res.sendStatus(403);
 
-        console.log("USER:", user);
-
         Tokens.find({email: user.email, token: token}, (err, result) => {
             if(err) return res.sendStatus(500);
 
