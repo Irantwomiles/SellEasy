@@ -44,7 +44,24 @@ postRouter.post('/delete/:id', function(req, res) {
 })
 
 postRouter.get('/get/:id', function(req, res) {
-    res.send("Get request");
+    
+    let id = req.params.id;
+
+    if(id) {
+        Posts.find({_id: id}, (error, result) => {
+            if(error) return res.send({status: 500, message: "error while fetching post by id"});
+
+            if(result.length > 0) {
+                res.send({status: 200, data: result[0], message: "post found."});
+            } else {
+                res.send({status: 404, message: "no post found by that id."});
+            }    
+        })
+
+    } else {
+        res.send({status: 400, message: "missing id param"});
+        return;
+    }
 })
 
 postRouter.get('/latest/:zipcode', function(req, res) {
