@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Toolbar from './components/Toolbar.js';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
@@ -8,12 +8,18 @@ import ViewAllGarageSales from './components/ViewallGarageSales';
 function App() {
 
   return(
-    <div className="App">
-      <Toolbar></Toolbar>
-      <SignUp></SignUp>
-      <SignIn></SignIn>
-      <ViewAllGarageSales></ViewAllGarageSales>
-    </div>
+    <Router>
+      <div className="App">
+        <Toolbar></Toolbar>
+
+        <Switch>
+          <Route path="/" exact component={ViewAllGarageSales}/>
+          <Route path="/signup" exact component={SignUp}/>
+          <Route path="/signin" exact component={SignIn}/>
+        </Switch>
+      
+      </div>
+    </Router>
   )
 }
 
