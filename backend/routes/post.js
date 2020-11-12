@@ -8,16 +8,18 @@ const Posts = require('../models/Posts');
 postRouter.post('/create', authenticateToken, function(req, res) {
 
     let email = req.user.email;
+    let title = req.body.title;
     let description = req.body.description;
     let items = req.body.items;
     let zip = req.body.zip;
     
-    if(email && description && items && zip) {
+    if(email && title && description && items && zip) {
         
         let createdAt = new Date().getTime();
         
         let post = new Posts({
             email: email,
+            title: title,
             description: description,
             items: items,
             zip: zip,
@@ -29,7 +31,7 @@ postRouter.post('/create', authenticateToken, function(req, res) {
                 return res.send({status: 401, message: "error while creating new post"});
             }
 
-            res.send({status: 201, data: {email: email, description: description, items: items, zip: zip, createdAt: createdAt, id: doc.id}, message: "new post created successfully!"});
+            res.send({status: 201, data: {email: email, title: title, description: description, items: items, zip: zip, createdAt: createdAt, id: doc.id}, message: "new post created successfully!"});
             return;
         })
 
@@ -40,7 +42,10 @@ postRouter.post('/create', authenticateToken, function(req, res) {
 })
 
 postRouter.post('/delete/:id', function(req, res) {
-
+    Posts.remove({}, (err) => {
+        if(err) res.send("error")
+    });
+    res.send("200");
 })
 
 postRouter.get('/get/:id', function(req, res) {

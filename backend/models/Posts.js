@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     email: {type: String},
+    title: {type: String},
     description: {type: String},
     items: [{
         name: {type: String},
