@@ -24,8 +24,16 @@ function SignIn() {
             return;
         }
 
-        setUser(email);
-        setToken("some-random-token");
+        if(!isLoggedIn()) {
+            
+        }
+
+    }
+
+    function isLoggedIn() {
+        if(user.length > 0 && token.length > 0) return true;
+
+        return false;
     }
 
     return (
