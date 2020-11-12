@@ -6,23 +6,28 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Account from './components/Account';
 import CreatePost from './components/CreatePost';
+import { UserProvider } from './context/UserContext';
 
 function App() {
 
   return(
     <Router>
-      <div className="App">
-        <Toolbar></Toolbar>
+      <UserProvider>
 
-        <Switch>
-          <Route path="/" exact component={ViewAllGarageSales}/>
-          <Route path="/signup" exact component={SignUp}/>
-          <Route path="/signin" exact component={SignIn}/>
-          <Route path="/account" exact component={Account}/>
-          <Route path="/create" exact component={CreatePost}/>
-        </Switch>
-      
-      </div>
+        <div className="App">
+          <Toolbar></Toolbar>
+
+          <Switch>
+            <Route path="/" exact component={ViewAllGarageSales}/>
+            <Route path="/signup" exact component={SignUp}/>
+            <Route path="/signin" exact component={SignIn}/>
+            <Route path="/account" exact component={Account}/>
+            <Route path="/create" exact component={CreatePost}/>
+          </Switch>
+        
+        </div>
+        
+      </UserProvider>
     </Router>
   )
 }
