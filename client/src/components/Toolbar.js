@@ -10,7 +10,7 @@ function Toolbar() {
         <Container style={{backgroundColor: "rgb(34,34,34)"}}>
             <Nav className="pt-1 pb-1 justify-content-md-center" onSelect={handleSelect}>
                 <Nav.Item>
-                    <Nav.Link href="/home">Home</Nav.Link>
+                    <Nav.Link style={{color: "white"}} href="/home">Home</Nav.Link>
                 </Nav.Item>
                 <NavDropdown title="Account" id="nav-dropdown">
                     <NavDropdown.Item eventKey="1">Sign In</NavDropdown.Item>
