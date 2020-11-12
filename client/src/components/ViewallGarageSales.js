@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import GarageSale from './GarageSale';
 import { Container, Row, Card } from 'react-bootstrap';
 
 function ViewallGarageSales(){
