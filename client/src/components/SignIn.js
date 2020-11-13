@@ -1,7 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, history } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 function SignIn() {
 
@@ -15,6 +17,9 @@ function SignIn() {
 
     const emailChange = (e) => { setEmail(e.target.value); }
     const passwordChange = (e) => { setPassword(e.target.value); }
+    const cookies = new Cookies();
+
+    let history = useHistory();
 
     const login = (e) => {
         e.preventDefault();
@@ -25,7 +30,24 @@ function SignIn() {
         }
 
         if(!isLoggedIn()) {
-            
+            axios.post(`http://localhost:5000/api/login`, {
+                email: email,
+                password: password
+            })
+            .then((response) => {
+                if(response.status === 200) {
+                    cookies.set('email', response.data.email, {path: '/'});
+                    cookies.set('token', response.data.token, {path: '/'});
+
+                    setUser(cookies.get('email'));
+                    setToken(cookies.get('token'));
+
+                    history.push('/');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         }
 
     }
@@ -53,7 +75,7 @@ function SignIn() {
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={emailChange}/>
                 </Form.Group>
-
+            
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password"  value={password} onChange={passwordChange}/>

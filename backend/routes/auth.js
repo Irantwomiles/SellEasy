@@ -44,7 +44,7 @@ authRouter.post('/login', function(req, res) {
 
                     //User is already logged in
                     if(result.length > 0) {
-                        res.send({status: 401, message: "you are already logged in."});
+                        res.send({email: result[0].email, token: result[0].token});
                         return;
                     } else {
                         let user = { email: email };
