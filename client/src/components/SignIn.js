@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
+import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 
 function SignIn() {
 
+    const {USER, TOKEN} = useContext(UserContext);
+    
+    const [user, setUser] = USER;
+    const [token, setToken] = TOKEN;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [show, setShow] = useState(false);
@@ -14,14 +19,21 @@ function SignIn() {
     const login = (e) => {
         e.preventDefault();
 
-        console.log("click")
-
         if(email.length === 0 || password.length === 0) {
             setShow(true);
             return;
         }
 
-        
+        if(!isLoggedIn()) {
+            
+        }
+
+    }
+
+    function isLoggedIn() {
+        if(user.length > 0 && token.length > 0) return true;
+
+        return false;
     }
 
     return (
