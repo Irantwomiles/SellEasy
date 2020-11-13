@@ -77,6 +77,34 @@ authRouter.post('/login', function(req, res) {
 
 });
 
+authRouter.get('/authenticated', function(req, res) {
+
+    let email = req.query.email;
+    let token = req.query.token;
+
+    if(!email && !token) {
+        res.sendStatus(403);
+        return;
+        // ( . ) ( . )
+    }
+
+    Tokens.find({email: email, token: token}, (err, result) => {
+        if(err) {
+            res.send({status: 500, message: "server error."});
+            return;
+        }
+
+        //User is already logged in
+        if(result.length > 0) {
+            res.send({email: result[0].email, token: result[0].token});
+            return;
+        } else {
+            res.sendStatus(403);
+            return;
+        }
+    });
+})
+
 authRouter.post('/logout', authenticateToken, function(req, res) {
 
     // Handle user logout here

@@ -1,6 +1,9 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import { Nav, NavDropdown, InputGroup, FormControl, Container } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 function Toolbar() {
 
@@ -8,7 +11,8 @@ function Toolbar() {
     
     const [user, setUser] = USER;
     const [token, setToken] = TOKEN;
-    // const [color, setColor] = setState();
+
+    const cookies = new Cookies();
 
     function isLoggedIn() {
         if(user.length > 0 && token.length > 0) return true;
@@ -16,14 +20,55 @@ function Toolbar() {
         return false;
     }
 
+    useEffect(() => {
+
+        let email = cookies.get('email');
+        let token = cookies.get('token');
+
+        console.log("email", email);
+        console.log("token", token);
+
+        if(email && token) {
+            axios.get(`http://localhost:5000/api/authenticated`, {
+                params: {
+                    email: email,
+                    token: token
+                }
+            })
+            .then((response) => {
+                if(response.status === 200) {
+                    cookies.set('email', response.data.email, {path: '/'});
+                    cookies.set('token', response.data.token, {path: '/'});
+
+                    setUser(cookies.get('email'));
+                    setToken(cookies.get('token'));
+
+                    // history.push('/');
+
+                    console.log("Logged in");
+                } else {
+                    cookies.remove('email');
+                    cookies.remove('token');
+                }
+            })
+            .catch((error) => {
+                cookies.remove('email');
+                cookies.remove('token');
+            });
+        }
+
+        
+
+    }, [])
+
     return (
         <Container style={{backgroundColor: "rgb(34,34,34)"}}>
             <Nav className="pt-1 pb-1 justify-content-md-center">
                 <Nav.Item>
-                    <Nav.Link style={{color: "white"}} href="/">Home</Nav.Link>
+                    <Nav.Link as={Link} to='/' style={{color: "white"}}>Home</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link style={{color: isLoggedIn() ? "white" : "red"}} href="/account">Account</Nav.Link>
+                    <Nav.Link as={Link} to='/account' style={{color: isLoggedIn() ? "white" : "red"}}>Account</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link style={{color: "white"}} href="/create">Create Post</Nav.Link>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, history } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
@@ -21,6 +21,13 @@ function SignIn() {
 
     let history = useHistory();
 
+    useEffect(() => {
+        if(password.length > 0 && email.length > 0) {
+            history.push('/');
+        }
+      
+    }, [user])
+
     const login = (e) => {
         e.preventDefault();
 
@@ -41,8 +48,6 @@ function SignIn() {
 
                     setUser(cookies.get('email'));
                     setToken(cookies.get('token'));
-
-                    history.push('/');
                 }
             })
             .catch((error) => {
