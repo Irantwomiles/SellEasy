@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Container, Row, Card } from 'react-bootstrap';
+import { Container, Row, Card, Alert } from 'react-bootstrap';
 
 function ViewallGarageSales(){
     
@@ -41,7 +41,11 @@ function ViewallGarageSales(){
         <Container style={{backgroundColor: "rgb(247,247,249)", height: "100vh"}}>
             <Row className="justify-content-md-center">
            {
-            loading ? "" :
+            loading ? 
+                <Alert className="mt-3" variant="dark">
+                    It looks like there are no posts to see right now, please come back later!
+                </Alert>
+            :
             
             data.map( (item) => (
         
