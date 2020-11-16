@@ -47,8 +47,9 @@ function CreatePost() {
                 
                 
             </Form>
-            <Button variant="primary">Post</Button>{' '}
             <Button variant="danger">Cancel</Button> 
+            <Button variant="primary">Post</Button>{' '}
+            
 
         </Container>
     )

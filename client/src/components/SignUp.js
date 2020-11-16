@@ -1,9 +1,9 @@
 import React from 'react';
-import { Form, Button, Col} from 'react-bootstrap';
+import { Form, Button, Col, Container} from 'react-bootstrap';
 
 function SignUp() {
     return (
-        <div>
+        <Container>
             <div>Signup Page</div>
             <Form>
                 <Form.Row>
@@ -111,7 +111,7 @@ function SignUp() {
                     Submit
                 </Button>
             </Form>
-        </div>
+        </Container>
     )
 }
 
