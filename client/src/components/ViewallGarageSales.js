@@ -41,7 +41,7 @@ function ViewallGarageSales(){
         <Container style={{backgroundColor: "rgb(247,247,249)", height: "100vh"}}>
             <Row className="justify-content-md-center">
            {
-            loading ? 
+            loading || data.length === 0 ? 
                 <Alert className="mt-3" variant="dark">
                     It looks like there are no posts to see right now, please come back later!
                 </Alert>

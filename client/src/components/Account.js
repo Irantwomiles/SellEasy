@@ -1,7 +1,15 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { UserContext } from '../context/UserContext';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 function Account() {
+
+    const {USER, TOKEN} = useContext(UserContext);
+    
+    const [user, setUser] = USER;
+    const [token, setToken] = TOKEN;
 
     return (
         <Container>
@@ -22,18 +30,18 @@ function Account() {
                     </Row>
                 </Col>
                 <Col sm={9} style={{border: "1px solid black"}}>
-                    <Row className="ml-1">
-                        <div style={{backgroundColor: "gray"}}>
-                            <span>Title of Post</span>
-                            <span>Description of the post here is goes something over here lmao</span>
-                            <span>11/11/2020</span>
+                    <Row className="m-1">
+                        <div style={{backgroundColor: "gray", width: "100%"}}>
+                            <p>Title Of Post</p>
+                            <p>Description of this post is this and that with some of this.</p>
+                            <p>Posted on: 11/11/2020</p>
                         </div>
                     </Row>
-                    <Row className="ml-1">
-                        <div style={{backgroundColor: "gray"}}>
-                            <span>Title of Post</span>
-                            <span>Description of the post here is goes something over here lmao</span>
-                            <span>11/11/2020</span>
+                    <Row className="m-1">
+                        <div style={{backgroundColor: "gray", width: "100%"}}>
+                            <p>Title Of Post</p>
+                            <p>Description of this post is this and that with some of this.</p>
+                            <p>Posted on: 11/11/2020</p>
                         </div>
                     </Row>
                 </Col>

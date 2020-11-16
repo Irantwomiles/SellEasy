@@ -89,6 +89,27 @@ postRouter.get('/latest/:zipcode', function(req, res) {
 
 })
 
+postRouter.get('/user/:email', function(req, res) {
+    
+    let email = req.params.email;
+
+    if(email) {
+        Posts.find({email: email}, (error, result) => {
+            if(error) return res.send({status: 500, message: "error while fetching post by id"});
+
+            if(result.length > 0) {
+                res.send({status: 200, data: result});
+            } else {
+                res.send({status: 404, message: "no post found by that email."});
+            }    
+        })
+
+    } else {
+        res.send({status: 400, message: "missing email param"});
+        return;
+    }
+})
+
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];

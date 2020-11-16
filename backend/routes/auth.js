@@ -27,6 +27,7 @@ authRouter.post('/login', function(req, res) {
         }
 
         let user = result[0];
+        let zipcode = user.zip;
 
         bcrypt.compare(password, user.password, (err, matched) => {
             if(err) {
@@ -44,7 +45,7 @@ authRouter.post('/login', function(req, res) {
 
                     //User is already logged in
                     if(result.length > 0) {
-                        res.send({email: result[0].email, token: result[0].token});
+                        res.send({email: result[0].email, token: result[0].token, zipcode: zipcode});
                         return;
                     } else {
                         let user = { email: email };
@@ -61,7 +62,7 @@ authRouter.post('/login', function(req, res) {
                                 return;
                             }
                             
-                            res.send({status: 200, token: token, message: "logged in 2."});
+                            res.send({status: 200, token: token, message: "logged in.", zipcode: zipcode});
                             return;
                         })
                     }

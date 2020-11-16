@@ -45,6 +45,7 @@ function SignIn() {
                 if(response.status === 200) {
                     cookies.set('email', response.data.email, {path: '/'});
                     cookies.set('token', response.data.token, {path: '/'});
+                    cookies.set('zipcode', response.data.zipcode, {path: '/'});
 
                     setUser(cookies.get('email'));
                     setToken(cookies.get('token'));
