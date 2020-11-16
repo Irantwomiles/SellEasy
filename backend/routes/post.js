@@ -50,7 +50,7 @@ postRouter.post('/delete/:id', function(req, res) {
 
 postRouter.get('/get/:id', function(req, res) {
     
-    let id = req.params.id;
+    let id = req.query.id;
 
     if(id) {
         Posts.find({_id: id}, (error, result) => {
@@ -89,12 +89,15 @@ postRouter.get('/latest/:zipcode', function(req, res) {
 
 })
 
-postRouter.get('/user/:email', function(req, res) {
+postRouter.get('/user', function(req, res) {
     
-    let email = req.params.email;
+    let email = req.query.email;
+
+    console.log(email);
 
     if(email) {
         Posts.find({email: email}, (error, result) => {
+
             if(error) return res.send({status: 500, message: "error while fetching post by id"});
 
             if(result.length > 0) {

@@ -49,13 +49,13 @@ function ViewallGarageSales(){
             
             data.map( (item) => (
         
-                <Card className="m-2" style={{width: '15rem'}}>
+                <Card key={item._id} className="m-2" style={{width: '15rem'}}>
                     <Card.Body>
                         <Card.Title>{item.email}</Card.Title>
                         <Card.Text>{item.description}</Card.Text>
                         {
                             item.items.map((i) => (
-                                <Card.Text>
+                                <Card.Text key={Math.random()}>
                                     {i.name}-{i.price}-{new Boolean(i.sold).toString()}
                                 </Card.Text>
                             ))

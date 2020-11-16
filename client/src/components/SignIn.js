@@ -58,6 +58,8 @@ function SignIn() {
 
     }
 
+    
+
     function isLoggedIn() {
         if(user.length > 0 && token.length > 0) return true;
 

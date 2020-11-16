@@ -25,9 +25,6 @@ function Toolbar() {
         let email = cookies.get('email');
         let token = cookies.get('token');
 
-        console.log("email", email);
-        console.log("token", token);
-
         if(email && token) {
             axios.get(`http://localhost:5000/api/authenticated`, {
                 params: {
@@ -56,8 +53,6 @@ function Toolbar() {
                 cookies.remove('token');
             });
         }
-
-        
 
     }, [])
 

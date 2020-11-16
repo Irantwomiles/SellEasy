@@ -8,7 +8,8 @@ const schema = new Schema({
     items: [{
         name: {type: String},
         price: {type: String},
-        sold: {type: Boolean}
+        sold: {type: Boolean},
+        quantity: {type: Number}
     }],
     zip: {type: Number},
     createdAt: {type: Number}
