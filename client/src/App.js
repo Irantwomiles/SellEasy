@@ -15,6 +15,8 @@ function App() {
       <UserProvider>
 
         <div className="App">
+          {console.log("I'm here")}
+
           <Toolbar></Toolbar>
 
           <Switch>
