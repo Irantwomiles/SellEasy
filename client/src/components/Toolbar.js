@@ -63,10 +63,10 @@ function Toolbar() {
                     <Nav.Link as={Link} to='/' style={{color: "white"}}>Home</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link as={Link} to='/account' style={{color: isLoggedIn() ? "white" : "red"}}>Account</Nav.Link>
+                    <Nav.Link as={Link} to='/account' style={{color: "white"}}>Account</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link style={{color: "white"}} href="/create">Create Post</Nav.Link>
+                    <Nav.Link as={Link} to='/create' style={{color: "white"}}>Create Post</Nav.Link>
                 </Nav.Item>
                 <Nav.Item className="ml-auto">
                     <InputGroup>

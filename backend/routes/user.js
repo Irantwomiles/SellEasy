@@ -17,14 +17,14 @@ userRouter.post('/create', function(req, res) {
     let zip = req.body.zip;
 
     if(firstName.length === 0 || lastName.length === 0 || email.length === 0 || password.length === 0 || zip.length === 0) {
-        res.send({status: 401, message: "all fields must be filled out."});
+        res.sendStatus(401)
         return;
     }
 
     User.find({email: email}, (err, result) => {
 
         if(result.length > 0) {
-            res.send({status: 401, message: "a user with that email already exists."});
+            res.sendStatus(401);
             return;
         }
 
@@ -40,11 +40,11 @@ userRouter.post('/create', function(req, res) {
     
             user.save(function(err) {
                 if(err) {
-                    res.send({status: 401, message: "error while creating user."});
+                    res.sendStatus(401);
                     return;
                 }
     
-                res.send({status: 200, message: "user created successfully."})
+                res.sendStatus(200);
             })
         })
 

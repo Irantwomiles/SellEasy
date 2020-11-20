@@ -71,7 +71,6 @@ function Account() {
                 
             })
             .catch((error) => {
-                console.log("account", error)
                 cookies.remove('email');
                 cookies.remove('token');
                 setLoading(false);
@@ -88,7 +87,24 @@ function Account() {
             {
                 loading ? "" :
                 loggedIn ?
-                data.length === 0 ? "Nothing to Show here"
+                (typeof data === 'undefined' || data.length === 0) ? 
+                <Row>
+                    <Col sm={3} style={{backgroundColor: "rgb(247,247,249)"}}>
+                        <Row className="mt-3 ml-1">
+                            <p style={{fontWeight: "bold", }}>Email</p>
+                            <p style={{marginLeft: "5px"}}>{cookies.get('email')}</p>
+                        </Row>
+                        <Row className="ml-1">
+                            <p style={{fontWeight: "bold", }}>Zip Code:</p>
+                            <p style={{marginLeft: "5px"}}>{cookies.get('zipcode')}</p>
+                        </Row>
+                        <Row className="ml-1">
+                            <Button variant="danger" onClick={logout}>
+                                Logout
+                            </Button>
+                        </Row>
+                    </Col>
+                </Row>
                 : 
 
                 <Row>

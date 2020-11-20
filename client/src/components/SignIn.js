@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Button, Container, Alert } from 'react-bootstrap';
+import { Form, Button, Container, Alert, Col } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -54,8 +54,6 @@ function SignIn() {
             .catch((error) => {
                 console.log(error);
             });
-        } else {
-            console.log("Logged in")
         }
 
     }

@@ -1,9 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Button, Col, Container, Alert } from 'react-bootstrap';
+import axios from 'axios';
 
 function SignUp() {
+
+    const [first, setFirst] = useState("");
+    const [last, setLast] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [retype, setRetype] = useState("");
+    const [zip, setZip] = useState("");
+
+    const [show, setShow] = useState({title: "Somethings Wrong!", message: "Filled out", type: "danger", show: false});
+
+    let history = useHistory();
+
+    const signup = () => {
+        if(first.length === 0 || last.length === 0 || email.length === 0 || password.length === 0 || retype.length === 0 || zip.length === 0) {
+            setShow({title: "Somethings Wrong!", message: "You must fill out all of the fields below!", type: "danger", show: true});
+            return;
+        }
+
+        if(password !== retype) {
+            setShow({title: "Somethings Wrong!", message: "Your passwords do not match!", type: "danger", show: true});
+            return;
+        }
+
+        axios.post('http://localhost:5000/api/create', {
+            firstName: first,
+            lastName: last,
+            email: email,
+            password: password,
+            zip: zip
+        }).then(response => {
+            if(response.status === 200) {
+                history.push('/signin');
+            }
+        }).catch(error => {
+            setShow({title: "Error!", message: "There was an error while attempting to create an account for you, please try again later!", type: "danger", show: true});
+        })
+    }
+
     return (
         <Container>
+            {
+                show.show ?
+                <Alert className="mt-3" variant="danger" onClose={() => setShow({title: "Somethings Wrong!", message: "Filled out", type: "danger", show: false})} dismissible>
+                    <Alert.Heading>Somethings Wrong!</Alert.Heading>
+                    <p>
+                        {show.message}
+                    </p>
+                </Alert>
+                : ""
+            }
+
             <Alert className="mt-2" variant="secondary">
                 Sign Up Page
             </Alert>
@@ -11,17 +62,17 @@ function SignUp() {
                 <Form.Row>
                     <Form.Group as={Col} controlId="formFirstLast">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control />
+                        <Form.Control onChange={(e) => {setFirst(e.target.value)}} placeholder="First Name"/>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formFirstLast">
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control />
+                        <Form.Control onChange={(e) => {setLast(e.target.value)}} placeholder="Last Name"/>
                     </Form.Group>
                 </Form.Row>
                 
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control type="email" onChange={(e) => {setEmail(e.target.value)}} placeholder="Enter email" />
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text>
@@ -29,87 +80,21 @@ function SignUp() {
                 <Form.Row>
                     <Form.Group as={Col} controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control type="password" onChange={(e) => {setPassword(e.target.value)}} placeholder="Password" />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formBasicPassword">
                         <Form.Label>Re-Enter Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control type="password" onChange={(e) => {setRetype(e.target.value)}} placeholder="Password" />
                     </Form.Group>
                 </Form.Row>
                 
-                <Form.Group controlId="formGridAddress1">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control placeholder="1234 Main St" />
-                </Form.Group>
                 <Form.Row>
-                    <Form.Group as={Col} controlId="formGridCity">
-                        <Form.Label>City</Form.Label>
-                        <Form.Control />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridState">
-                        <Form.Label>State</Form.Label>
-                        <Form.Control as="select" defaultValue="Choose...">
-                            <option>Choose...</option>
-                            <option>Alabama - AL</option>
-                            <option>Alaska - AK</option>
-                            <option>Arizona - AZ</option>
-                            <option>Arkansas - AR</option>
-                            <option>California - CA</option>
-                            <option>Colorado - CO</option>
-                            <option>Connecticut - CT</option>
-                            <option>Delaware - DE</option>
-                            <option>Florida - FL</option>
-                            <option>Georgia - GA</option>
-                            <option>Hawaii - HI</option>
-                            <option>Idaho - ID</option>
-                            <option>Illinois - IL</option>
-                            <option>Indiana - IN</option>
-                            <option>Iowa - IA</option>
-                            <option>Kansas - KS</option>
-                            <option>Kentucky - KY</option>
-                            <option>Louisiana - LA</option>
-                            <option>Maine - ME</option>
-                            <option>Maryland - MD</option>
-                            <option>Massachusetts - MA</option>
-                            <option>Michigan - MI</option>
-                            <option>Minnesota - MN</option>
-                            <option>Mississippi - MS</option>
-                            <option>Missouri - MO</option>
-                            <option>Montana - MT</option>
-                            <option>Nebraska - NE</option>
-                            <option>Nevada - NV</option>
-                            <option>New Hampshire - NH</option>
-                            <option>New Jersey - NJ</option>
-                            <option>New Mexico - NM</option>
-                            <option>New York - NY</option>
-                            <option>North Carolina - NC</option>
-                            <option>North Dakota - ND</option>
-                            <option>Ohio - OH</option>
-                            <option>Oklahoma - OK</option>
-                            <option>Oregon - OR</option>
-                            <option>Pennsylvania - PA</option>
-                            <option>Rhode Island - RI</option>
-                            <option>South Carolina - SC</option>
-                            <option>South Dakota - SD</option>
-                            <option>Tennessee - TN</option>
-                            <option>Texas - TX</option>
-                            <option>Utah - UT</option>
-                            <option>Vermont - VT</option>
-                            <option>Virginia - VA</option>
-                            <option>Washington - WA</option>
-                            <option>West Virginia - WV</option>
-                            <option>Wisconsin - WI</option>
-                            <option>Wyoming - WY</option>
-                        </Form.Control>
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridZip">
-                        <Form.Label>Zip</Form.Label>
-                        <Form.Control />
+                    <Form.Group as={Col} sm={2} controlId="formGridZip">
+                        <Form.Label>Zipcode</Form.Label>
+                        <Form.Control className="col-xs-2" onChange={(e) => {setZip(e.target.value)}} placeholder="27215"/>
                     </Form.Group>
                 </Form.Row>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" onClick={signup}>
                     Submit
                 </Button>
             </Form>
