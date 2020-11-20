@@ -15,7 +15,7 @@ function Toolbar() {
     const cookies = new Cookies();
 
     function isLoggedIn() {
-        if(user.length > 0 && token.length > 0) return true;
+        if(cookies.get("email") && cookies.get("token")) return true;
 
         return false;
     }

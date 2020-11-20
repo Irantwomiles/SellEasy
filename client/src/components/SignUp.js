@@ -1,10 +1,12 @@
 import React from 'react';
-import { Form, Button, Col, Container} from 'react-bootstrap';
+import { Form, Button, Col, Container, Alert } from 'react-bootstrap';
 
 function SignUp() {
     return (
         <Container>
-            <div>Signup Page</div>
+            <Alert className="mt-2" variant="secondary">
+                Sign Up Page
+            </Alert>
             <Form>
                 <Form.Row>
                     <Form.Group as={Col} controlId="formFirstLast">

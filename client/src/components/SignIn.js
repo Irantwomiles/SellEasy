@@ -43,17 +43,19 @@ function SignIn() {
             })
             .then((response) => {
                 if(response.status === 200) {
+
                     cookies.set('email', response.data.email, {path: '/'});
                     cookies.set('token', response.data.token, {path: '/'});
                     cookies.set('zipcode', response.data.zipcode, {path: '/'});
 
-                    setUser(cookies.get('email'));
-                    setToken(cookies.get('token'));
+                    history.push("/");
                 }
             })
             .catch((error) => {
                 console.log(error);
             });
+        } else {
+            console.log("Logged in")
         }
 
     }
@@ -61,7 +63,7 @@ function SignIn() {
     
 
     function isLoggedIn() {
-        if(user.length > 0 && token.length > 0) return true;
+        if(cookies.get('email') && cookies.get('token')) return true;
 
         return false;
     }
@@ -79,6 +81,11 @@ function SignIn() {
                 : ""
             }
             <Form>
+
+                <Alert className="mt-2" variant="secondary">
+                    Sign In Page
+                </Alert>
+
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={emailChange}/>

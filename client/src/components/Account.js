@@ -1,15 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 function Account() {
-
-    const {USER, TOKEN} = useContext(UserContext);
-    
-    const [user, setUser] = USER;
-    const [token, setToken] = TOKEN;
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -17,19 +13,28 @@ function Account() {
 
     const cookies = new Cookies();
 
-    // function isLoggedIn() {
-    //     if(user.length > 0 && token.length > 0) return true;
+    let history = useHistory();
 
-    //     return false;
-    // }
+    const logout = (e) => {
+        e.preventDefault();
 
-    function isLoggedIn() {
-        return loggedIn;
+        axios.post('http://localhost:5000/api/logout', {}, {
+            headers: {
+                'Authorization': `Bearer ${cookies.get("token")}`
+            }
+        }).then(response => {
+            if(response.status === 200) {
+                cookies.remove('email');
+                cookies.remove('token');
+
+                history.push("/");
+            }
+        }).catch(error => {
+            console.log("This person is not logged in")
+        }) 
     }
 
     useEffect(() => {
-
-        console.log(data.length)
 
         let email = cookies.get('email');
         let token = cookies.get('token');
@@ -47,8 +52,6 @@ function Account() {
                     cookies.set('email', response.data.email, {path: '/'});
                     cookies.set('token', response.data.token, {path: '/'});
 
-                    setUser(cookies.get('email'));
-                    setToken(cookies.get('token'));
                     setLoggedIn(true);
 
                     axios.get(`http://localhost:5000/api/post/user`, {
@@ -63,15 +66,12 @@ function Account() {
                         setLoading(false);
                     })
 
-                } else {
-                    cookies.remove('email');
-                    cookies.remove('token');
-                    setLoading(false);
-                }
+                } 
 
                 
             })
             .catch((error) => {
+                console.log("account", error)
                 cookies.remove('email');
                 cookies.remove('token');
                 setLoading(false);
@@ -88,7 +88,6 @@ function Account() {
             {
                 loading ? "" :
                 loggedIn ?
-
                 data.length === 0 ? "Nothing to Show here"
                 : 
 
@@ -103,7 +102,7 @@ function Account() {
                             <p style={{marginLeft: "5px"}}>{data[0].zip}</p>
                         </Row>
                         <Row className="ml-1">
-                            <Button  variant="danger">
+                            <Button variant="danger" onClick={logout}>
                                 Logout
                             </Button>
                         </Row>
@@ -120,27 +119,17 @@ function Account() {
                                 </Row>
                             ))
                         }
-                        {/* <Row className="m-1">
-                            <div style={{backgroundColor: "gray", width: "100%"}}>
-                                <p>Title Of Post</p>
-                                <p>Description of this post is this and that with some of this.</p>
-                                <p>Posted on: 11/11/2020</p>
-                            </div>
-                        </Row>
-                        <Row className="m-1">
-                            <div style={{backgroundColor: "gray", width: "100%"}}>
-                                <p>Title Of Post</p>
-                                <p>Description of this post is this and that with some of this.</p>
-                                <p>Posted on: 11/11/2020</p>
-                            </div>
-                        </Row> */}
                     </Col>
                 </Row>
 
                 :
 
-                <div>You are not logged in</div>
-                
+                <Row className="justify-content-md-center mt-5">
+
+                    <Button className="mr-2" onClick={() => {history.push('/signin')}}>Sign In</Button>
+                    <Button className="ml-2" onClick={() => {history.push('/signup')}}>Sign Up</Button>
+                   
+                </Row>
 
             }
 

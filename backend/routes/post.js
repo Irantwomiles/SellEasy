@@ -93,8 +93,6 @@ postRouter.get('/user', function(req, res) {
     
     let email = req.query.email;
 
-    console.log(email);
-
     if(email) {
         Posts.find({email: email}, (error, result) => {
 
@@ -120,7 +118,7 @@ function authenticateToken(req, res, next) {
     if(token == null) return res.sendStatus(401);
 
     jwt.verify(token, jwtSecret(), (error, user) => {
-        if(error) return res.send({status: 403, message: "Error while authenticating."});
+        if(error) return res.sendStatus(403);
 
         Tokens.find({email: user.email, token: token}, (err, result) => {
             
@@ -131,7 +129,7 @@ function authenticateToken(req, res, next) {
                 req.token = token;
                 next();
             } else {
-                res.send({status: 403, message: "You are not logged in"});
+                res.sendStatus(403);
                 return;
             }
         })

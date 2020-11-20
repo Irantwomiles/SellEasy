@@ -62,7 +62,7 @@ authRouter.post('/login', function(req, res) {
                                 return;
                             }
                             
-                            res.send({status: 200, token: token, message: "logged in.", zipcode: zipcode});
+                            res.send({status: 200, email: email, token: token, message: "logged in.", zipcode: zipcode});
                             return;
                         })
                     }
@@ -123,13 +123,11 @@ authRouter.post('/logout', authenticateToken, function(req, res) {
             Tokens.deleteMany({email: email, token: token}, (err1, result1) => {
                 if(err1) return res.sendStatus(500);
         
-                console.log("Result1: ", result1);
-
-                res.send({status: 200, message: "logged out successfully"});
+                res.sendStatus(200);
                 return;
             })
         } else {
-            res.send({status: 403, message: "you can't do that"});
+            res.sendStatus(403);
             return;
         }
     })
@@ -155,7 +153,7 @@ function authenticateToken(req, res, next) {
                 req.token = token;
                 next();
             } else {
-                res.send({status: 403, message: "You are not logged in"});
+                res.sendStatus(403);
                 return;
             }
         })
