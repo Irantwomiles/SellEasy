@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Form } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -10,6 +10,7 @@ function Account() {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [zip, setZip] = useState("");
 
     const cookies = new Cookies();
 
@@ -95,8 +96,16 @@ function Account() {
                             <p style={{marginLeft: "5px"}}>{cookies.get('email')}</p>
                         </Row>
                         <Row className="ml-1">
-                            <p style={{fontWeight: "bold", }}>Zip Code:</p>
-                            <p style={{marginLeft: "5px"}}>{cookies.get('zipcode')}</p>
+                            <Form>
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formFirstLast">
+                                        <Form.Label>ZipCode</Form.Label>
+                                        <Form.Control type="number" onChange={(e) => {setZip(e.target.value)}} placeholder={cookies.get("zipcode") ? cookies.get("zipcode") : "ex: 27215"} value={zip}/>
+                                    </Form.Group>
+                                </Form.Row>
+                            </Form>
+                            {/* <p style={{fontWeight: "bold", }}>Zip Code:</p>
+                            <p style={{marginLeft: "5px"}}>{cookies.get('zipcode')}</p> */}
                         </Row>
                         <Row className="ml-1">
                             <Button variant="danger" onClick={logout}>

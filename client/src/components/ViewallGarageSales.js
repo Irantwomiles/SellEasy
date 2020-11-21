@@ -8,7 +8,7 @@ function ViewallGarageSales(){
     const [loading, setLoading] = useState(true);
     const [zipcode, setZipcode] = useState();
 
-    const GET_RECENT_DATA_URL = "http://localhost:5000/api/post/latest/27215";
+    const GET_RECENT_DATA_URL = "http://localhost:5000/api/post/latest/27213";
 
     useEffect(() => {
 
@@ -51,7 +51,7 @@ function ViewallGarageSales(){
         
                 <Card key={item._id} className="m-2" style={{width: '15rem'}}>
                     <Card.Body>
-                        <Card.Title>{item.email}</Card.Title>
+                        <Card.Title>{item.title}</Card.Title>
                         <Card.Text>{item.description}</Card.Text>
                         {
                             item.items.map((i) => (

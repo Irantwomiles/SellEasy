@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { Nav, NavDropdown, InputGroup, FormControl, Container } from 'react-bootstrap';
+import { Nav, InputGroup, FormControl, Container } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -42,7 +42,6 @@ function Toolbar() {
 
                     // history.push('/');
 
-                    console.log("Logged in");
                 } else {
                     cookies.remove('email');
                     cookies.remove('token');
