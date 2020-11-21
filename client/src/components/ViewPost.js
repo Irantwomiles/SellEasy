@@ -8,7 +8,7 @@ function ViewPost() {
 
     return (
         <Container>
-            
+
         </Container>
 
 
@@ -17,3 +17,5 @@ function ViewPost() {
 
     )
 }
+
+export default ViewPost;
