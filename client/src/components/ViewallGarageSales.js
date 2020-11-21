@@ -1,18 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Container, Row, Card, Alert } from 'react-bootstrap';
+import Cookies from 'universal-cookie';
 
 function ViewallGarageSales(){
     
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [zipcode, setZipcode] = useState();
+    const cookies = new Cookies();
 
-    const GET_RECENT_DATA_URL = "http://localhost:5000/api/post/latest/27213";
+    const GET_RECENT_DATA_URL = `http://localhost:5000/api/post/latest/${cookies.get("zipcode") ? cookies.get("zipcode") : "27215"}`;
 
     useEffect(() => {
 
-        // setZipcode(27215);
+        console.log("this is getting called");
+
+        if(!cookies.get("zipcode")) {
+            cookies.set("zipcode", "-1", {path: "/"});
+        }
 
         (async () => {
 
@@ -43,7 +49,7 @@ function ViewallGarageSales(){
            {
             loading || data.length === 0 ? 
                 <Alert className="mt-3" variant="dark">
-                    It looks like there are no posts to see right now, please come back later!
+                    It looks like there are no posts to see right now on zipcode {cookies.get("zipcode")}, please come back later!
                 </Alert>
             :
             

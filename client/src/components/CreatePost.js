@@ -62,6 +62,12 @@ function CreatePost() {
 
     }
 
+    function loggedIn() {
+        if(cookies.get("email") && cookies.get("token")) return true;
+
+        return false;
+    }
+
     return (
         <Container>
             <Form>

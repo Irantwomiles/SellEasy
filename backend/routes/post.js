@@ -74,12 +74,22 @@ postRouter.get('/latest/:zipcode', function(req, res) {
     let zipcode = req.params.zipcode;
 
     if(zipcode) {
-        Posts.find({zip: Number.parseInt(zipcode)}, null, {sort: {createdAt: -1}}, (error, result) => {
-            if(error) return res.send({status: 500, message: "error while fetching latest posts"});
-
-            res.send(result);
-
-        }).limit(100);
+        if(Number.parseInt(zipcode) !== -1) {
+            Posts.find({zip: Number.parseInt(zipcode)}, null, {sort: {createdAt: -1}}, (error, result) => {
+                if(error) return res.send({status: 500, message: "error while fetching latest posts"});
+    
+                res.send(result);
+    
+            }).limit(100);
+        } else {
+            Posts.find({}, null, {sort: {createdAt: -1}}, (error, result) => {
+                if(error) return res.send({status: 500, message: "error while fetching latest posts"});
+    
+                res.send(result);
+    
+            }).limit(100);
+        }
+        
     } else {
         res.send({status: 400, message: "missing zipcode"});
         return;

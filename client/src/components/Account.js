@@ -92,26 +92,41 @@ function Account() {
                 <Row>
                     <Col sm={3} style={{backgroundColor: "rgb(247,247,249)"}}>
                         <Row className="mt-3 ml-1">
-                            <p style={{fontWeight: "bold", }}>Email</p>
-                            <p style={{marginLeft: "5px"}}>{cookies.get('email')}</p>
+                            <p style={{fontWeight: "bold" }}>Email</p>
+                            <p style={{marginLeft: "5px"}}>{data[0].email}</p>
                         </Row>
-                        <Row className="ml-1">
-                            <Form>
-                                <Form.Row>
-                                    <Form.Group as={Col} controlId="formFirstLast">
-                                        <Form.Label>ZipCode</Form.Label>
-                                        <Form.Control type="number" onChange={(e) => {setZip(e.target.value)}} placeholder={cookies.get("zipcode") ? cookies.get("zipcode") : "ex: 27215"} value={zip}/>
-                                    </Form.Group>
-                                </Form.Row>
-                            </Form>
-                            {/* <p style={{fontWeight: "bold", }}>Zip Code:</p>
-                            <p style={{marginLeft: "5px"}}>{cookies.get('zipcode')}</p> */}
-                        </Row>
-                        <Row className="ml-1">
-                            <Button variant="danger" onClick={logout}>
+                
+                        <Form>
+                            <Form.Row className="align-items-center">
+                                <Col xs="auto">
+                                <Form.Label htmlFor="inlineFormInput">
+                                    ZipCode
+                                </Form.Label>
+                                <Form.Control
+                                    className="mb-2"
+                                    id="inlineFormInput"
+                                    type="number"
+                                    onChange={(e) => {setZip(e.target.value)}} 
+                                    placeholder={cookies.get("zipcode") ? cookies.get("zipcode") : "ex: 27215"}
+                                />
+                                </Col>
+                                <Col xs="auto">
+                                <Button className="mb-2"
+                                    onClick={() => {
+                                        if(zip.length !== 0) {
+                                            cookies.set("zipcode", Number.parseInt(zip), {path: '/'})
+                                        } 
+                                    }}
+                                >
+                                    Update
+                                </Button>
+                                </Col>
+                            </Form.Row>
+
+                            <Button className="mt-5" variant="danger" onClick={logout}>
                                 Logout
                             </Button>
-                        </Row>
+                        </Form>
                     </Col>
                 </Row>
                 : 
@@ -119,18 +134,42 @@ function Account() {
                 <Row>
                     <Col sm={3} style={{backgroundColor: "rgb(247,247,249)"}}>
                         <Row className="mt-3 ml-1">
-                            <p style={{fontWeight: "bold", }}>Email</p>
+                            <p style={{fontWeight: "bold" }}>Email</p>
                             <p style={{marginLeft: "5px"}}>{data[0].email}</p>
                         </Row>
-                        <Row className="ml-1">
-                            <p style={{fontWeight: "bold", }}>Zip Code:</p>
-                            <p style={{marginLeft: "5px"}}>{data[0].zip}</p>
-                        </Row>
-                        <Row className="ml-1">
-                            <Button variant="danger" onClick={logout}>
+                
+                        <Form>
+                            <Form.Row className="align-items-center">
+                                <Col xs="auto">
+                                <Form.Label htmlFor="inlineFormInput">
+                                    ZipCode
+                                </Form.Label>
+                                <Form.Control
+                                    className="mb-2"
+                                    id="inlineFormInput"
+                                    type="number"
+                                    onChange={(e) => {setZip(e.target.value)}} 
+                                    placeholder={cookies.get("zipcode") ? cookies.get("zipcode") : "ex: 27215"}
+                                    value={zip}
+                                />
+                                </Col>
+                                <Col xs="auto">
+                                <Button className="mb-2"
+                                    onClick={() => {
+                                        if(zip.length !== 0) {
+                                            cookies.set("zipcode", Number.parseInt(zip), {path: '/'})
+                                        } 
+                                    }}
+                                >
+                                    Update
+                                </Button>
+                                </Col>
+                            </Form.Row>
+
+                            <Button className="mt-5" variant="danger" onClick={logout}>
                                 Logout
                             </Button>
-                        </Row>
+                        </Form>
                     </Col>
                     <Col sm={9} style={{border: "1px solid black"}}>
                         {
@@ -148,14 +187,42 @@ function Account() {
                 </Row>
 
                 :
+                <>
+                    <Form>
+                    
+                            <Col sm={2} xs="auto">
+                                <Form.Label>
+                                    ZipCode
+                                </Form.Label>
+                                <Form.Control
+                                    className="mb-2"
+                                    type="number"
+                                    onChange={(e) => {setZip(e.target.value)}} 
+                                    placeholder={cookies.get("zipcode") ? cookies.get("zipcode") : "ex: 27215"}
+                                    value={zip}
+                                />
+                            </Col>
+                            <Col xs="auto">
+                            <Button className="mb-2"
+                                onClick={() => {
+                                    if(zip.length !== 0) {
+                                        cookies.set("zipcode", Number.parseInt(zip), {path: '/'})
+                                    } 
+                                }}
+                            >
+                                Update
+                            </Button>
+                            </Col>
+                  
+                    </Form>
 
-                <Row className="justify-content-md-center mt-5">
+                    <hr></hr>
 
-                    <Button className="mr-2" onClick={() => {history.push('/signin')}}>Sign In</Button>
-                    <Button className="ml-2" onClick={() => {history.push('/signup')}}>Sign Up</Button>
-                   
-                </Row>
-
+                    <Row className="justify-content-md-center mt-5">
+                        <Button className="mr-2" onClick={() => {history.push('/signin')}}>Sign In</Button>
+                        <Button className="ml-2" onClick={() => {history.push('/signup')}}>Sign Up</Button>
+                    </Row>
+                </>
             }
 
         </Container>
