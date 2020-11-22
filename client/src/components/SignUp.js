@@ -63,6 +63,9 @@ function SignUp() {
                     <Form.Group as={Col}>
                         <Form.Label>First Name</Form.Label>
                         <Form.Control onChange={(e) => {setFirst(e.target.value)}} placeholder="First Name" value={first}/>
+                        <Form.Text className="text-muted">
+                        Your full name won't be displayed.
+                    </Form.Text>
                     </Form.Group>
                     <Form.Group as={Col}>
                         <Form.Label>Last Name</Form.Label>
@@ -74,7 +77,7 @@ function SignUp() {
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" onChange={(e) => {setEmail(e.target.value)}} placeholder="Enter email" value={email}/>
                     <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
+                        Everyone will be able to see your email.
                     </Form.Text>
                 </Form.Group>
                 <Form.Row>
