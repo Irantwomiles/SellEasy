@@ -71,6 +71,8 @@ postRouter.get('/get/:id', function(req, res) {
 
 postRouter.get('/latest/:zipcode', function(req, res) {
     
+    console.log("this is running here");
+
     let zipcode = req.params.zipcode;
 
     if(zipcode) {
