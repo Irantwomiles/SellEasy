@@ -4,6 +4,7 @@ import { Nav, InputGroup, FormControl, Container } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { TwitterFollowButton } from 'react-twitter-embed';
 
 function Toolbar() {
 
@@ -56,6 +57,7 @@ function Toolbar() {
     }, [])
 
     return (
+        <>
         <Container style={{backgroundColor: "rgb(34,34,34)"}}>
             <Nav className="pt-1 pb-1 justify-content-md-center">
                 <Nav.Item>
@@ -78,9 +80,15 @@ function Toolbar() {
                         </InputGroup.Append>
                     </InputGroup>
                 </Nav.Item>
-                
+
             </Nav>
         </Container>
+        <Container className="mt-2" style={{backgroundColor: "rgb(247,247,249)"}}>
+            <TwitterFollowButton
+                screenName={'Irantwomiles'}
+            />
+        </Container>
+        </>
     )
 }
 
