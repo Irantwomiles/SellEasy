@@ -47,7 +47,7 @@ function Account() {
 
         if(id && id.length > 0 && cookies.get("token")) {
 
-            axios.post(`http://localhost:5000/api/post/delete/${id}`, {}, { 
+            axios.post(`https://selleasy.herokuapp.com/api/post/delete/${id}`, {}, { 
                 headers: {
                     'Authorization': `Bearer ${cookies.get("token")}`
                 }
