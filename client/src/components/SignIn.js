@@ -84,12 +84,12 @@ function SignIn() {
                     Sign In Page
                 </Alert>
 
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={emailChange}/>
                 </Form.Group>
             
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group>
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password"  value={password} onChange={passwordChange}/>
                 </Form.Group>

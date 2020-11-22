@@ -88,12 +88,12 @@ function Account() {
             {
                 loading ? "" :
                 loggedIn ?
-                (typeof data === 'undefined' || data.length === 0) ? 
+                ((typeof data === 'undefined') || (data.length === 0)) ? 
                 <Row>
                     <Col sm={3} style={{backgroundColor: "rgb(247,247,249)"}}>
                         <Row className="mt-3 ml-1">
                             <p style={{fontWeight: "bold" }}>Email</p>
-                            <p style={{marginLeft: "5px"}}>{data[0].email}</p>
+                            <p style={{marginLeft: "5px"}}>{cookies.get("email")}</p>
                         </Row>
                 
                         <Form>

@@ -60,17 +60,17 @@ function SignUp() {
             </Alert>
             <Form>
                 <Form.Row>
-                    <Form.Group as={Col} controlId="formFirstLast">
+                    <Form.Group as={Col}>
                         <Form.Label>First Name</Form.Label>
                         <Form.Control onChange={(e) => {setFirst(e.target.value)}} placeholder="First Name" value={first}/>
                     </Form.Group>
-                    <Form.Group as={Col} controlId="formFirstLast">
+                    <Form.Group as={Col}>
                         <Form.Label>Last Name</Form.Label>
                         <Form.Control onChange={(e) => {setLast(e.target.value)}} placeholder="Last Name" value={last}/>
                     </Form.Group>
                 </Form.Row>
                 
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" onChange={(e) => {setEmail(e.target.value)}} placeholder="Enter email" value={email}/>
                     <Form.Text className="text-muted">
@@ -78,18 +78,18 @@ function SignUp() {
                     </Form.Text>
                 </Form.Group>
                 <Form.Row>
-                    <Form.Group as={Col} controlId="formBasicPassword">
+                    <Form.Group as={Col}>
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" onChange={(e) => {setPassword(e.target.value)}} placeholder="Password" value={password}/>
                     </Form.Group>
-                    <Form.Group as={Col} controlId="formBasicPassword">
+                    <Form.Group as={Col}>
                         <Form.Label>Re-Enter Password</Form.Label>
                         <Form.Control type="password" onChange={(e) => {setRetype(e.target.value)}} placeholder="Password" value={retype}/>
                     </Form.Group>
                 </Form.Row>
                 
                 <Form.Row>
-                    <Form.Group as={Col} sm={2} controlId="formGridZip">
+                    <Form.Group as={Col} sm={2}>
                         <Form.Label>Zipcode</Form.Label>
                         <Form.Control className="col-xs-2" onChange={(e) => {setZip(e.target.value)}} placeholder="27215" value={zip}/>
                     </Form.Group>

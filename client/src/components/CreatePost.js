@@ -69,59 +69,71 @@ function CreatePost() {
     }
 
     return (
-        <Container>
-            <Form>
-                <Form.Group>
-                    <Form.Label>Post title</Form.Label>
-                    <Form.Control onChange={(e) => {setTitle(e.target.value)}} size="lg" type="text" placeholder="Enter title here" value={title}/>
-                </Form.Group>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control onChange={(e) => {setDescription(e.target.value)}} as="textarea" rows={3} placeholder="Include relevant information such as time and location" value={description}/>
-                </Form.Group>
-                <Form.Group controlId="formGridZip" >
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control onChange={(e) => {setZipcode(e.target.value)}} placeholder={cookies.get('zipcode')? cookies.get('zipcode'):"12345"} value={zipcode}/>
-                </Form.Group>
-                <Form.Row>
-                    <Form.Group as={Col} controlID="formGridItemName">
-                        <Form.Label>Item</Form.Label>
-                        <Form.Control onChange={(e) => {setItemName(e.target.value)}} size="sm" type="text" placeholder="Enter item name" value={itemName}>
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridPrice">
-                        <Form.Label>$</Form.Label>
-                        <Form.Control onChange={(e) => {setPrice(e.target.value)}} size="sm" type="number" placeholder="0.00" value={price}>
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridQuant">
-                        <Form.Label>Quantity</Form.Label>
-                        <Form.Control onChange={(e) => {setQuantity(e.target.value)}} size="sm" type="number" placeholder="0" value={quantity}>
-                        </Form.Control>
-                    </Form.Group>
-                </Form.Row>
+        <>
+            {
+                !loggedIn() 
+                ? history.push('/account')
+                :
+            <Container>
 
-                {
-                    items.map(item => (
-                        <Row key={item.id} className="m-1">
-                            <div style={{width: "100%", border: "1px solid black"}}>
-                                <span>{item.name}</span>
-                                <span>{item.price}</span>
-                                <span>{item.quantity}</span>
-                                <span><Button style={{float: "right"}} variant="danger" onClick={() => {removeItem(item.id)}}>Delete</Button></span>
-                            </div>
-                        </Row>
-                    ))
-                }
+                <Form>
+                    <Form.Group>
+                        <Form.Label>Post title</Form.Label>
+                        <Form.Control onChange={(e) => {setTitle(e.target.value)}} size="lg" type="text" placeholder="Enter title here" value={title}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control onChange={(e) => {setDescription(e.target.value)}} as="textarea" rows={3} placeholder="Include relevant information such as time and location" value={description}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Zip</Form.Label>
+                        <Form.Control onChange={(e) => {setZipcode(e.target.value)}} placeholder={cookies.get('zipcode')? cookies.get('zipcode'):"12345"} value={zipcode}/>
+                    </Form.Group>
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Label>Item</Form.Label>
+                            <Form.Control onChange={(e) => {setItemName(e.target.value)}} size="sm" type="text" placeholder="Enter item name" value={itemName}>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>$</Form.Label>
+                            <Form.Control onChange={(e) => {setPrice(e.target.value)}} size="sm" type="number" placeholder="0.00" value={price}>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Quantity</Form.Label>
+                            <Form.Control onChange={(e) => {setQuantity(e.target.value)}} size="sm" type="number" placeholder="0" value={quantity}>
+                            </Form.Control>
+                        </Form.Group>
+                    </Form.Row>
 
-                <Button className="mb-2" variant="secondary" onClick={addItem}>Add Item</Button>
-                    
-            </Form>
-            <hr></hr>
-            <Button className="mr-2" variant="primary" onClick={createPost}>Post</Button>
-            <Button variant="danger" onClick={() => {history.push("/")}}>Cancel</Button> 
+                    {
+                        items.map(item => (
+                            <Row key={item.id} className="m-1">
+                                <div style={{width: "100%", border: "1px solid black"}}>
+                                    <span>{item.name}</span>
+                                    <span>{item.price}</span>
+                                    <span>{item.quantity}</span>
+                                    <span><Button style={{float: "right"}} variant="danger" onClick={() => {removeItem(item.id)}}>Delete</Button></span>
+                                </div>
+                            </Row>
+                        ))
+                    }
+
+                    <Button className="mb-2" variant="secondary" onClick={addItem}>Add Item</Button>
+                        
+                </Form>
+                <hr></hr>
+                <Button className="mr-2" variant="primary" onClick={createPost}>Post</Button>
+                <Button variant="danger" onClick={() => {history.push("/")}}>Cancel</Button> 
+
+            </Container>
             
-        </Container>
+            }
+
+            
+            </>
+     
     )
 }
 

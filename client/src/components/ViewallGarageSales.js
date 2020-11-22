@@ -10,7 +10,7 @@ function ViewallGarageSales(){
     const [zipcode, setZipcode] = useState();
     const cookies = new Cookies();
 
-    const GET_RECENT_DATA_URL = `http://localhost:5000/api/post/latest/${cookies.get("zipcode") ? cookies.get("zipcode") : "27215"}`;
+    const GET_RECENT_DATA_URL = `http://localhost:5000/api/post/latest/${cookies.get("zipcode") ? cookies.get("zipcode") : "-1"}`;
 
     useEffect(() => {
 
