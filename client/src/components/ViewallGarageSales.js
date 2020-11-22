@@ -1,16 +1,22 @@
 import React, {useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Card, Alert } from 'react-bootstrap';
+import { Container, Row, Card, Alert, Button } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 
 function ViewallGarageSales(){
     
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [zipcode, setZipcode] = useState();
     const cookies = new Cookies();
 
     const GET_RECENT_DATA_URL = `https://selleasy.herokuapp.com/api/post/latest/${cookies.get("zipcode") ? cookies.get("zipcode") : "-1"}`;
+
+    let history = useHistory();
+
+    const visitPage = (id) => {
+        history.push(`/${id}`);
+    }
 
     useEffect(() => {
 
@@ -35,14 +41,6 @@ function ViewallGarageSales(){
 
     }, []);
     
-    useEffect(() => {
-
-        for(let i = 0; i < data.length; i++) {
-            console.log(data[i].email, data[i].items);
-        }
-
-    }, [data])
-
     return (
         <Container style={{backgroundColor: "rgb(247,247,249)", height: "100vh"}}>
             <Row className="justify-content-md-center">
@@ -58,15 +56,14 @@ function ViewallGarageSales(){
                 <Card key={item._id} className="m-2" style={{width: '15rem'}}>
                     <Card.Body>
                         <Card.Title>{item.title}</Card.Title>
+                        <Card.Subtitle style={{color: "#616161"}}>Description</Card.Subtitle>
                         <Card.Text>{item.description}</Card.Text>
-                        {
-                            item.items.map((i) => (
-                                <Card.Text key={Math.random()}>
-                                    {i.name}-{i.price}-{new Boolean(i.sold).toString()}
-                                </Card.Text>
-                            ))
-                        }
+                        <Card.Text>Items for sale: {item.items.length}</Card.Text>
+                        
                     </Card.Body>
+                    <Card.Footer className="text-center">
+                        <Button variant="primary" onClick={() => {visitPage(item._id)}}>View Page</Button>
+                    </Card.Footer>
                 </Card>
                 
             ))

@@ -25,7 +25,7 @@ function App() {
             <Route path="/signin" exact component={SignIn}/>
             <Route path="/account" exact component={Account}/>
             <Route path="/create" exact component={CreatePost}/>
-            <Route path="/view" exact component={ViewPost}/>
+            <Route path="/:id" render={(props) => <ViewPost {...props} key={props.match.params.id} />} />
           </Switch>
         
         </div>
