@@ -41,11 +41,23 @@ postRouter.post('/create', authenticateToken, function(req, res) {
   
 })
 
-postRouter.post('/delete/:id', function(req, res) {
-    Posts.remove({}, (err) => {
-        if(err) res.send("error")
+postRouter.post('/delete/:id', authenticateToken, function(req, res) {
+
+    let id = req.params.id;
+    let email = req.user.email;
+
+
+    Posts.deleteOne({_id: id, email: email}, (err) => {
+        if(err) res.sendStatus(403);
+
+        Posts.find({email: email}, (error, result) => {
+            if(error) return res.sendStatus(500);
+
+            res.send({data: result});
+        })
     });
-    res.send("200");
+
+
 })
 
 postRouter.get('/get/:id', function(req, res) {

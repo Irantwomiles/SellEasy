@@ -20,8 +20,6 @@ function ViewallGarageSales(){
 
     useEffect(() => {
 
-        console.log("this is getting called");
-
         if(!cookies.get("zipcode")) {
             cookies.set("zipcode", "-1", {path: "/"});
         }

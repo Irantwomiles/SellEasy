@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Button, Col, Row, Container} from 'react-bootstrap';
+import { Form, Button, Col, Row, Container, Card } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
@@ -23,6 +23,9 @@ function CreatePost() {
         }
 
         setItems((prevItem) => [...prevItem, {name: itemName, price: price, quantity: quantity, id: Math.random()}])
+        setItemName("");
+        setPrice("");
+        setQuantity("");
     }
 
     const removeItem = (id) => {
@@ -52,10 +55,11 @@ function CreatePost() {
             }
         }).then(response => {
             
-            console.log("createPost", response)
-            // if(response.status === 200) {
-            //     history.push('/signin');
-            // }
+            if(response.status === 200) {
+                //send to post page
+                history.push(`/${response.data.data.id}`);
+            }
+
         }).catch(error => {
             console.log("createPost", error)
         })
@@ -109,14 +113,14 @@ function CreatePost() {
 
                     {
                         items.map(item => (
-                            <Row key={item.id} className="m-1">
-                                <div style={{width: "100%", border: "1px solid black"}}>
-                                    <span>{item.name}</span>
-                                    <span>{item.price}</span>
-                                    <span>{item.quantity}</span>
-                                    <span><Button style={{float: "right"}} variant="danger" onClick={() => {removeItem(item.id)}}>Delete</Button></span>
-                                </div>
-                            </Row>
+                       
+                            <div key={item.id} style={{width: "100%", display: "flex", flexDirection: "row", border: "1px solid #DFDFDF", justifyContent: "center", marginBottom: "20px"}}>
+                                <p style={{width: "33%", margin: "5px"}}>Name: {item.name}</p>
+                                <p style={{width: "33%", margin: "5px"}}>Price: ${item.price}</p>
+                                <p style={{width: "33%", margin: "5px"}}>Quantity: {item.quantity}x</p>
+                                <button onClick={() => {removeItem(item.id)}} style={{marginTop: "5px", marginBottom: "5px", marginRight: "5px", border: "none", borderRadius: "45px", backgroundColor: "#DFDFDF", color: "black"}}>x</button>
+                            </div>
+            
                         ))
                     }
 

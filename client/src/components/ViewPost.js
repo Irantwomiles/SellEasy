@@ -11,7 +11,7 @@ function ViewPost(props) {
    
     useEffect(() => {
 
-        const URL = `http://localhost:5000/api/post/get/${props.match.params.id}`;
+        const URL = `https://selleasy.herokuapp.com/api/post/get/${props.match.params.id}`;
 
         (async () => {
 
@@ -28,14 +28,14 @@ function ViewPost(props) {
     return (
         <Container>
             {
-                Object.keys(data).length === 0 ? "Nothing to see here" :
+                Object.keys(data).length === 0 ? "Couldn't find anything at this URL" :
                 <Card className="mt-3">
                     <Card.Body>
                         <Card.Title>{data.title}</Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">Posted By: {data.email}</Card.Subtitle>
                         <Card.Text>{data.description}</Card.Text>
                         <Card.Subtitle className="mb-2 text-muted">Items for Sale</Card.Subtitle>
-                        <Card.Body style={{border: "1px solid #DFDFDF"}}>
+                        <Card.Body style={{border: "1px solid #DFDFDF", borderRadius: "3px"}}>
                             <Table>
                                 <thead>
                                     <tr>
