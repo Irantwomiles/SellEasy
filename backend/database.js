@@ -2,7 +2,9 @@ const mongoose = require('mongoose')
 
 const MONGO_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.yhfxu.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 
-mongoose.connect(process.MONGODB_URI || MONGO_URL, { useNewUrlParser: true });
+console.log(process.env.MONGODB_URI)
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
