@@ -41,7 +41,7 @@ function CreatePost() {
             return;
         }
 
-        axios.post('http://localhost:5000/api/post/create', {
+        axios.post('https://selleasy.herokuapp.com/api/post/create', {
             title: title,
             description: description,
             zip: zipcode,

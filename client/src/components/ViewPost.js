@@ -8,7 +8,7 @@ function ViewPost() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const GET_RECENT_DATA_URL = "http://localhost:5000/api/post/latest/27213";
+    const GET_RECENT_DATA_URL = "https://selleasy.herokuapp.com/api/post/latest/27213";
 
     useEffect(() => {
 

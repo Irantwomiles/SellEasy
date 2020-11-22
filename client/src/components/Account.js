@@ -19,7 +19,7 @@ function Account() {
     const logout = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:5000/api/logout', {}, {
+        axios.post('https://selleasy.herokuapp.com/api/logout', {}, {
             headers: {
                 'Authorization': `Bearer ${cookies.get("token")}`
             }
@@ -41,7 +41,7 @@ function Account() {
         let token = cookies.get('token');
 
         if(email && token) {
-            axios.get(`http://localhost:5000/api/authenticated`, {
+            axios.get(`https://selleasy.herokuapp.com/api/authenticated`, {
                 params: {
                     email: email,
                     token: token
@@ -55,7 +55,7 @@ function Account() {
 
                     setLoggedIn(true);
 
-                    axios.get(`http://localhost:5000/api/post/user`, {
+                    axios.get(`https://selleasy.herokuapp.com/api/post/user`, {
                         params: {
                             email: cookies.get('email')
                         }

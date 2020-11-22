@@ -26,7 +26,7 @@ function Toolbar() {
         let token = cookies.get('token');
 
         if(email && token) {
-            axios.get(`http://localhost:5000/api/authenticated`, {
+            axios.get(`https://selleasy.herokuapp.com/api/authenticated`, {
                 params: {
                     email: email,
                     token: token

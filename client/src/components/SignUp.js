@@ -27,7 +27,7 @@ function SignUp() {
             return;
         }
 
-        axios.post('http://localhost:5000/api/create', {
+        axios.post('https://selleasy.herokuapp.com/api/create', {
             firstName: first,
             lastName: last,
             email: email,
