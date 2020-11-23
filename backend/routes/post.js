@@ -83,7 +83,7 @@ postRouter.get('/get/:id', function(req, res) {
 
 postRouter.get('/search', function(req, res) {
     
-    let search = req.body.search;
+    let search = req.query.search;
 
     if(search) {
         Posts.find({"items.name": {"$regex": search, "$options": "i"}}, (error, result) => {
@@ -92,7 +92,7 @@ postRouter.get('/search', function(req, res) {
             }
 
             res.send(result);   
-        })
+        }).limit(10);
 
     } else {
         res.sendStatus(400);
