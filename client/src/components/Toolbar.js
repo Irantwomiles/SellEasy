@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Nav, InputGroup, FormControl, Container } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+import { Nav, InputGroup, FormControl, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { TwitterFollowButton } from 'react-twitter-embed';
+import '../Search.css';
 
 function Toolbar() {
 
     const [search, setSearch] = useState("");
-    // const []
+    const [data, setData] = useState([]);
 
     const cookies = new Cookies();
-
-    function isLoggedIn() {
-        if(cookies.get("email") && cookies.get("token")) return true;
-
-        return false;
-    }
+    let history = useHistory();
 
     useEffect(() => {
 
@@ -51,19 +47,44 @@ function Toolbar() {
 
         if(search.length < 3) return;
 
-        
+        axios.get('http://localhost:5000/api/post/search', {
+            params: {
+                search: search
+            }
+        }).then((response) => {
+            setData(response.data);
+        }).catch(error => {
+            console.log(error)
+        })
 
     }, [search])
+
+    const sendToPage = (id) => {
+        history.push(`/${id}`);
+        setData([])
+    }
+
+    const searchItems = () => {
+        axios.get('http://localhost:5000/api/post/search', {
+            params: {
+                search: search
+            }
+        }).then((response) => {
+            setData(response.data);
+        }).catch(error => {
+            console.log(error)
+        })
+    }
 
     return (
         <>
         <Container style={{backgroundColor: "rgb(34,34,34)"}}>
             <Nav className="pt-1 pb-1 justify-content-md-center">
                 <Nav.Item>
-                    <Nav.Link as={Link} to='/' style={{color: "white"}}>About</Nav.Link>
+                    <Nav.Link as={Link} to='/viewall' style={{color: "white"}}>Home</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link as={Link} to='/viewall' style={{color: "white"}}>Home</Nav.Link>
+                    <Nav.Link as={Link} to='/' style={{color: "white"}}>About</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link as={Link} to='/account' style={{color: "white"}}>Account</Nav.Link>
@@ -81,7 +102,7 @@ function Toolbar() {
                             value={search}
                         />
                         <InputGroup.Append>
-                            <InputGroup.Text id="inputGroup-sizing-default">Search</InputGroup.Text>
+                            <InputGroup.Text id="inputGroup-sizing-default" onClick={searchItems}>Search</InputGroup.Text>
                         </InputGroup.Append>
                     </InputGroup>
                 </Nav.Item>
@@ -89,6 +110,17 @@ function Toolbar() {
             </Nav>
         </Container>
         <Container className="mt-2" style={{backgroundColor: "rgb(247,247,249)"}}>
+            <Row>
+                {
+                    data.map((item) => (
+                        <div key={Math.random()} className="ml-3 search-wrapper" onClick={() => {sendToPage(item._id)}}>
+                            <p className="search-title">{item.title}</p>
+                            <p className="search-click">Click To View</p>
+                        </div>
+                    ))
+                }
+
+            </Row>
             <TwitterFollowButton
                 screenName={'SellEasy2'}
             />
