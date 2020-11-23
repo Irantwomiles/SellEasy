@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "create-react-app": "^3.4.1"
+    "create-react-app": "^3.4.1",
+    "react-twitter-embed": "^3.0.3"
   }
 }
