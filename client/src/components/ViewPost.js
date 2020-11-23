@@ -73,6 +73,7 @@ function ViewPost(props) {
                                         <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Sold</th>
+                                        <th>Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -91,11 +92,11 @@ function ViewPost(props) {
                                                     (cookies.get("email") && data.email === cookies.get("email"))
                                                     ? (i.sold) ? 
                                                     <td>
-                                                        <Button size="sm" variant="warning" onClick={() => {soldbutton(index)}}>Mark as Not Sold</Button>
+                                                        <Button size="sm" variant="info" onClick={() => {soldbutton(index)}}>Mark as Not Sold</Button>
                                                     </td>
                                                     : 
                                                     <td>
-                                                        <Button size="sm" variant="info" onClick={() => {soldbutton(index)}}>Mark as Sold</Button>
+                                                        <Button size="sm" variant="warning" onClick={() => {soldbutton(index)}}>Mark as Sold</Button>
                                                     </td>
                                                     : ""
                                                 }
