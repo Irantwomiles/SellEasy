@@ -22,7 +22,7 @@ function CreatePost() {
             return;
         }
 
-        setItems((prevItem) => [...prevItem, {name: itemName, price: price, quantity: quantity, id: Math.random()}])
+        setItems((prevItem) => [...prevItem, {name: itemName, price: price, quantity: quantity, sold: false, id: Math.random()}])
         setItemName("");
         setPrice("");
         setQuantity("");
