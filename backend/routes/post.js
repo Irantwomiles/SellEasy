@@ -81,6 +81,25 @@ postRouter.get('/get/:id', function(req, res) {
     }
 })
 
+postRouter.get('/search', function(req, res) {
+    
+    let search = req.body.search;
+
+    if(search) {
+        Posts.find({"items.name": {"$regex": search, "$options": "i"}}, (error, result) => {
+            if(error) {
+                return res.sendStatus(500);
+            }
+
+            res.send(result);   
+        })
+
+    } else {
+        res.sendStatus(400);
+        return;
+    }
+})
+
 postRouter.get('/latest/:zipcode', function(req, res) {
     
     let zipcode = req.params.zipcode;

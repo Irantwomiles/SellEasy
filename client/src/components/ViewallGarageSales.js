@@ -55,7 +55,7 @@ function ViewallGarageSales(){
                     <Card.Body>
                         <Card.Title>{item.title}</Card.Title>
                         <Card.Subtitle style={{color: "#616161"}}>Description</Card.Subtitle>
-                        <Card.Text>{item.description}</Card.Text>
+                        <Card.Text>{item.description.length >= 150 ? item.description.substring(0, 149) + "..." : item.description}</Card.Text>
                         <Card.Text>Items for sale: {item.items.length}</Card.Text>
                         
                     </Card.Body>

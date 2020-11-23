@@ -1,17 +1,14 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, InputGroup, FormControl, Container } from 'react-bootstrap';
-import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { TwitterFollowButton } from 'react-twitter-embed';
 
 function Toolbar() {
 
-    const {USER, TOKEN} = useContext(UserContext);
-    
-    const [user, setUser] = USER;
-    const [token, setToken] = TOKEN;
+    const [search, setSearch] = useState("");
+    // const []
 
     const cookies = new Cookies();
 
@@ -37,12 +34,6 @@ function Toolbar() {
                 if(response.status === 200) {
                     cookies.set('email', response.data.email, {path: '/'});
                     cookies.set('token', response.data.token, {path: '/'});
-
-                    setUser(cookies.get('email'));
-                    setToken(cookies.get('token'));
-
-                    // history.push('/');
-
                 } else {
                     cookies.remove('email');
                     cookies.remove('token');
@@ -55,6 +46,14 @@ function Toolbar() {
         }
 
     }, [])
+
+    useEffect(() => {
+
+        if(search.length < 3) return;
+
+        
+
+    }, [search])
 
     return (
         <>
@@ -74,6 +73,9 @@ function Toolbar() {
                         <FormControl
                             aria-label="Default"
                             aria-describedby="inputGroup-sizing-default"
+                            placeholder="Enter item name..."
+                            onChange={(e) => {setSearch(e.target.value)}}
+                            value={search}
                         />
                         <InputGroup.Append>
                             <InputGroup.Text id="inputGroup-sizing-default">Search</InputGroup.Text>
@@ -85,7 +87,7 @@ function Toolbar() {
         </Container>
         <Container className="mt-2" style={{backgroundColor: "rgb(247,247,249)"}}>
             <TwitterFollowButton
-                screenName={'Irantwomiles'}
+                screenName={'SellEasy2'}
             />
         </Container>
         </>
