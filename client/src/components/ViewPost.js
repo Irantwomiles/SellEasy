@@ -197,13 +197,26 @@ function ViewPost(props) {
                     <Card.Title>
                         Comments
                     </Card.Title>
+                    {
+                        data.comments.map(comm => (
+                            <Card>
+                            <Card.Body>
+                                <Card.Subtitle>{comm.email}, {comm.createdAt}</Card.Subtitle>
+                                <Card.Text>{comm.message}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                        )) 
+                    }
+                    
+
+                   
 
                     <Form>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
                             <Form.Control as="textarea" placeholder="Write a comment"  rows={3} onChange={(e) => {setMessage(e.target.value)}} value={message}/>
                         </Form.Group>
                     </Form>
-                    <Button variant="primary" onClick={() => {commentbutton()}}>Post</Button>{' '}
+                    <Button variant="primary" onClick={() => {commentbutton()}}>Post</Button>
                     
                 </Card.Body>
             </Card>
