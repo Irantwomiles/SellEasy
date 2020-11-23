@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Card, Table, Button } from 'react-bootstrap';
+import { Container, Card, Table, Button, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -72,8 +72,17 @@ function ViewPost(props) {
                                         <th>Item</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
-                                        <th>Sold</th>
-                                        <th>Options</th>
+                                        
+                                        <th>Details</th>
+                                        {
+                                            (cookies.get("email") && data.email === cookies.get("email")) ?
+                                            <th>Sold</th>
+                                            : ""
+
+                                        }
+                                        
+                                        
+                                        {/* <th>Options</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -83,20 +92,39 @@ function ViewPost(props) {
                                                 <td>{i.name}</td>
                                                 <td>${i.price}</td>
                                                 <td>{i.quantity}</td>
-                                                <td>
+                                                
+                                                {
+                                                    (i.sold) ?
+                                                    <td>
+                                                        <Button size="sm" variant="danger">Out of Stock</Button>
+                                                    </td>
+                                                    :
+                                                    <td>
+                                                        <Button size="sm" variant="warning">In Stock</Button>
+                                                    </td>
 
-                                                </td>
-                                                <td>{new Boolean(i.sold).toString()}</td>
+                                                }
+                                                {/* <td>{new Boolean(i.sold).toString()}</td> */}
                                                 {
                                                     
                                                     (cookies.get("email") && data.email === cookies.get("email"))
                                                     ? (i.sold) ? 
                                                     <td>
-                                                        <Button size="sm" variant="info" onClick={() => {soldbutton(index)}}>Mark as Not Sold</Button>
+                                                        <InputGroup className="mb-3" size="sm">
+                                                            <InputGroup.Prepend>
+                                                                <InputGroup.Checkbox aria-label="Checkbox for following text input" onClick={() => {soldbutton(index)}} />
+                                                            </InputGroup.Prepend>
+                                                        </InputGroup>
+                                                        {/* <Button size="sm" variant="danger" onClick={() => {soldbutton(index)}}>Out of Stock</Button> */}
                                                     </td>
                                                     : 
                                                     <td>
-                                                        <Button size="sm" variant="warning" onClick={() => {soldbutton(index)}}>Mark as Sold</Button>
+                                                        <InputGroup className="mb-3" size="sm">
+                                                            <InputGroup.Prepend>
+                                                                <InputGroup.Checkbox aria-label="Checkbox for following text input" onClick={() => {soldbutton(index)}}/>
+                                                            </InputGroup.Prepend>
+                                                        </InputGroup>
+                                                        {/* <Button size="sm" variant="warning" onClick={() => {soldbutton(index)}}>In Stock</Button> */}
                                                     </td>
                                                     : ""
                                                 }
