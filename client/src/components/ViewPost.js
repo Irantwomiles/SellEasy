@@ -24,15 +24,16 @@ function ViewPost(props) {
            
             if(result.status === 200) {
                 setData(result.data.data);
-
-                
             }
-
-
 
         })();
 
     }, []);
+
+    useEffect(() => {
+
+        console.log(data);   
+    }, [data]);
 
 
     const soldbutton = (index) => {
@@ -40,16 +41,33 @@ function ViewPost(props) {
 
         let arr = data.items;
         arr[index].sold = !arr[index].sold;
-        
 
-        setData({
+        let obj = {
             email: data.email,
             description: data.description,
             title : data.title,
             items: arr,
             zip: data.zip,
-            createdAt: data.createdAt
-        })
+            createdAt: data.createdAt,
+            _id: data._id
+        }
+
+        axios.post('http://localhost:5000/api/post/update', {
+            data: obj
+        }, {
+            headers: {
+                'Authorization': `Bearer ${cookies.get("token")}`
+            }
+        }).then(response => {
+            if(response.status === 200) {
+                console.log(response)
+                setData(obj);
+            }
+        }).catch(error => {
+            console.log(error)
+        }) 
+
+    
 
         
 
