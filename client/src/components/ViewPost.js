@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Card, Table, Button, InputGroup } from 'react-bootstrap';
+import { Container, Card, Table, Button, InputGroup, Form } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -52,6 +52,28 @@ function ViewPost(props) {
         })
 
         
+
+    }
+
+    const commentbutton = () => {
+        if(msg.length === 0 ) {
+            setShow({title: "Somethings Wrong!", message: "You cannot have an empty comment!", type: "danger", show: true});
+            return;
+        }
+
+        // axios.post('https://selleasy.herokuapp.com/api/update', {
+        //     firstName: first,
+        //     lastName: last,
+        //     email: email,
+        //     password: password,
+        //     zip: zip
+        // }).then(response => {
+        //     if(response.status === 200) {
+        //         history.push('/signin');
+        //     }
+        // }).catch(error => {
+        //     setShow({title: "Error!", message: "There was an error while attempting to post your comment, please try again later!", type: "danger", show: true});
+        // })
 
     }
 
@@ -138,6 +160,24 @@ function ViewPost(props) {
                     </Card.Body>
                 </Card>
             }
+
+            <Card>
+                <Card.Body>
+                    <Card.Title>
+                        Comments
+                    </Card.Title>
+
+
+
+                    <Form>
+                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Control as="textarea" placeholder="Write a comment" value={msg} rows={3} />
+                        </Form.Group>
+                    </Form>
+                    <Button variant="primary" onClick={() => {commentbutton(msg)}}>Post</Button>{' '}
+                    
+                </Card.Body>
+            </Card>
 
 
             
