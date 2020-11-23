@@ -12,7 +12,14 @@ const schema = new Schema({
         quantity: {type: Number}
     }],
     zip: {type: Number},
-    createdAt: {type: Number}
+    createdAt: {type: Number},
+    comments: [
+        {
+            email: {type: String},
+            message: {type: String},
+            createdAt: {type: Number}
+        }
+    ]
 });
 
 module.exports = mongoose.model("Posts", schema);
