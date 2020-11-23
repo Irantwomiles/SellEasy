@@ -8,30 +8,12 @@ function ViewPost(props) {
 
     const [data, setData] = useState({});
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState([]);
+    const [show, setShow] = useState({title: "Somethings Wrong!", message: "You cannot have an empty comment!", type: "danger", show: false})
 
     const cookies = new Cookies();
 
-   
     useEffect(() => {
 
-        setMessage([
-            {
-                email: "tracy@gmail.com",
-                message: "hello this is my message",
-                createdAt: 0
-            },
-            {
-                email: "tracy2@gmail.com",
-                message: "hello2 this is my message",
-                createdAt: 1
-            },
-            {
-                email: "tracy2@gmail.com",
-                message: "hello2 this is my message",
-                createdAt: 2
-            }
-        ])
 
         const URL = `https://selleasy.herokuapp.com/api/post/get/${props.match.params.id}`;
 
