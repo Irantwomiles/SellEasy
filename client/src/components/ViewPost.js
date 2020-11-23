@@ -74,10 +74,10 @@ function ViewPost(props) {
     }
 
     const commentbutton = () => {
-        if(msg.length === 0 ) {
-            setShow({title: "Somethings Wrong!", message: "You cannot have an empty comment!", type: "danger", show: true});
-            return;
-        }
+        // if(msg.length === 0 ) {
+            // setShow({title: "Somethings Wrong!", message: "You cannot have an empty comment!", type: "danger", show: true});
+        //     return;
+        // }
 
         // axios.post('https://selleasy.herokuapp.com/api/update', {
         //     firstName: first,
@@ -189,10 +189,10 @@ function ViewPost(props) {
 
                     <Form>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Control as="textarea" placeholder="Write a comment" value={msg} rows={3} />
+                            <Form.Control as="textarea" placeholder="Write a comment"  rows={3} />
                         </Form.Group>
                     </Form>
-                    <Button variant="primary" onClick={() => {commentbutton(msg)}}>Post</Button>{' '}
+                    <Button variant="primary" onClick={() => {commentbutton()}}>Post</Button>{' '}
                     
                 </Card.Body>
             </Card>
