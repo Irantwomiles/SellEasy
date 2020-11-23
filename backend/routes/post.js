@@ -46,7 +46,6 @@ postRouter.post('/delete/:id', authenticateToken, function(req, res) {
     let id = req.params.id;
     let email = req.user.email;
 
-
     Posts.deleteOne({_id: id, email: email}, (err) => {
         if(err) res.sendStatus(403);
 
@@ -148,6 +147,26 @@ postRouter.get('/user', function(req, res) {
 
     } else {
         res.send({status: 400, message: "missing email param"});
+        return;
+    }
+})
+
+postRouter.post('/update', authenticateToken, function(req, res) {
+    
+    let user = req.user.email;
+    let doc = req.body.data
+
+    console.log(doc)
+
+    if(doc && user && doc.email === user) {
+
+        Posts.findOneAndUpdate({_id: doc._id}, {items: doc.items}, {new: true}, (err, data) => {
+            if(err) return res.sendStatus(500);
+            res.send(data);
+        })
+
+    } else {
+        res.sendStatus(400);
         return;
     }
 })
