@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Button, Col, Row, Container, Card } from 'react-bootstrap';
+import { Form, Button, Col, Row, Container, Card, Alert } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
@@ -14,11 +14,14 @@ function CreatePost() {
     const [quantity, setQuantity] = useState("");
     const [items, setItems] = useState([]);
 
+    const [show, setShow] = useState({title: "Somethings Wrong!", message: "Filled out", type: "danger", show: false});
+
     const cookies = new Cookies();
     let history = useHistory();
 
     const addItem = () => {
         if(itemName.length === 0 || price.length === 0 || quantity.length === 0) {
+            setShow({title: "Somethings Wrong!", message: "Filled out", type: "danger", show: true});
             return;
         }
 
@@ -34,13 +37,13 @@ function CreatePost() {
     }
 
     const createPost = () => {
-        if(title.length === 0 || description.length === 0 || zipcode.length === 0) {
-
+        if(title.length === 0 || description.length === 0 || zipcode.length === 0 ) {
+            setShow({title: "Somethings Wrong!", message: "Make sure to include a title, description, and zip code", type: "danger", show: true});
             return;
         }
 
         if(items.length === 0) {
-
+            setShow({title: "Somethings Wrong!", message: "Make sure to press Add Item!", type: "danger", show: true});
             return;
         }
 
@@ -79,6 +82,16 @@ function CreatePost() {
                 ? history.push('/account')
                 :
             <Container>
+                {
+                    show.show ?
+                    <Alert className="mt-3" variant="danger" onClose={() => setShow({title: "Somethings Wrong!", message: "Filled out", type: "danger", show: false})} dismissible>
+                        <Alert.Heading>Could not post!</Alert.Heading>
+                        <p>
+                            {show.message}
+                        </p>
+                    </Alert>
+                    : ""
+                }
 
                 <Form>
                     <Form.Group>
@@ -129,6 +142,8 @@ function CreatePost() {
                 </Form>
                 <hr></hr>
                 <Button className="mr-2" variant="primary" onClick={createPost}>Post</Button>
+              
+               
                 <Button variant="danger" onClick={() => {history.push("/")}}>Cancel</Button> 
 
             </Container>
