@@ -20,12 +20,14 @@ function App() {
           <Toolbar></Toolbar>
 
           <Switch>
-            <Route path="/" exact component={ViewAllGarageSales}/>
+            <Route path="/" exact component={About}/>
             <Route path="/signup" exact component={SignUp}/>
             <Route path="/signin" exact component={SignIn}/>
             <Route path="/account" exact component={Account}/>
             <Route path="/create" exact component={CreatePost}/>
             <Route path="/:id" render={(props) => <ViewPost {...props} key={props.match.params.id} />} />
+            <Route path="/viewall" exact component={ViewAllGarageSales}/>
+
           </Switch>
         
         </div>

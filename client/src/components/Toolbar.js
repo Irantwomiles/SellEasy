@@ -60,7 +60,10 @@ function Toolbar() {
         <Container style={{backgroundColor: "rgb(34,34,34)"}}>
             <Nav className="pt-1 pb-1 justify-content-md-center">
                 <Nav.Item>
-                    <Nav.Link as={Link} to='/' style={{color: "white"}}>Home</Nav.Link>
+                    <Nav.Link as={Link} to='/' style={{color: "white"}}>About</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link as={Link} to='/viewall' style={{color: "white"}}>Home</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link as={Link} to='/account' style={{color: "white"}}>Account</Nav.Link>
