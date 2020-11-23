@@ -23,7 +23,8 @@ postRouter.post('/create', authenticateToken, function(req, res) {
             description: description,
             items: items,
             zip: zip,
-            createdAt: createdAt
+            createdAt: createdAt,
+            comments: []
         })
 
         post.save(function(error, doc) {
@@ -161,6 +162,24 @@ postRouter.post('/update', authenticateToken, function(req, res) {
     if(doc && user && doc.email === user) {
 
         Posts.findOneAndUpdate({_id: doc._id}, {items: doc.items}, {new: true}, (err, data) => {
+            if(err) return res.sendStatus(500);
+            res.send(data);
+        })
+
+    } else {
+        res.sendStatus(400);
+        return;
+    }
+})
+
+postRouter.post('/comments', authenticateToken, function(req, res) {
+    
+    let user = req.user.email;
+    let doc = req.body.data
+
+    if(doc && user) {
+
+        Posts.findOneAndUpdate({_id: doc._id}, {comments: doc.comments}, {new: true}, (err, data) => {
             if(err) return res.sendStatus(500);
             res.send(data);
         })

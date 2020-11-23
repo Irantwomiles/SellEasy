@@ -3,18 +3,35 @@ import { useHistory } from 'react-router-dom';
 import { Container, Card, Table, Button, InputGroup, Form } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
 
 function ViewPost(props) {
 
     const [data, setData] = useState({});
-    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState([]);
 
     const cookies = new Cookies();
 
    
     useEffect(() => {
+
+        setMessage([
+            {
+                email: "tracy@gmail.com",
+                message: "hello this is my message",
+                createdAt: 0
+            },
+            {
+                email: "tracy2@gmail.com",
+                message: "hello2 this is my message",
+                createdAt: 1
+            },
+            {
+                email: "tracy2@gmail.com",
+                message: "hello2 this is my message",
+                createdAt: 2
+            }
+        ])
 
         const URL = `https://selleasy.herokuapp.com/api/post/get/${props.match.params.id}`;
 
@@ -67,31 +84,47 @@ function ViewPost(props) {
             console.log(error)
         }) 
 
-    
-
-        
-
     }
 
     const commentbutton = () => {
-        // if(msg.length === 0 ) {
-            // setShow({title: "Somethings Wrong!", message: "You cannot have an empty comment!", type: "danger", show: true});
-        //     return;
-        // }
+        if(message.length === 0 ) {
+            setShow({title: "Somethings Wrong!", message: "You cannot have an empty comment!", type: "danger", show: true});
+            return;
+        }
 
-        // axios.post('https://selleasy.herokuapp.com/api/update', {
-        //     firstName: first,
-        //     lastName: last,
-        //     email: email,
-        //     password: password,
-        //     zip: zip
-        // }).then(response => {
-        //     if(response.status === 200) {
-        //         history.push('/signin');
-        //     }
-        // }).catch(error => {
-        //     setShow({title: "Error!", message: "There was an error while attempting to post your comment, please try again later!", type: "danger", show: true});
-        // })
+        let arr = data.comments;
+
+        arr.push({
+            email: cookies.get("email"),
+            message: message,
+            createdAt: new Date.now()
+        })
+
+        let obj = {
+            email: data.email,
+            description: data.description,
+            title : data.title,
+            items: data.items,
+            zip: data.zip,
+            createdAt: data.createdAt,
+            comments: arr,
+            _id: data._id
+        }
+
+        axios.post('http://localhost:5000/api/post/comments', {
+            data: obj
+        }, {
+            headers: {
+                'Authorization': `Bearer ${cookies.get("token")}`
+            }
+        }).then(response => {
+            if(response.status === 200) {
+                console.log(response)
+                setData(obj);
+            }
+        }).catch(error => {
+            console.log(error)
+        }) 
 
     }
 
@@ -103,6 +136,7 @@ function ViewPost(props) {
                     <Card.Body>
                         <Card.Title>{data.title}</Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">Posted By: {data.email}</Card.Subtitle>
+                        <Card.Subtitle className="mb-2 text-muted">{new Date(data.createdAt).toLocaleDateString("en-US")}</Card.Subtitle>
                         <Card.Text>{data.description}</Card.Text>
                         <Card.Subtitle className="mb-2 text-muted">Items for Sale</Card.Subtitle>
                         <Card.Body style={{border: "1px solid #DFDFDF", borderRadius: "3px"}}>
@@ -121,8 +155,6 @@ function ViewPost(props) {
 
                                         }
                                         
-                                        
-                                        {/* <th>Options</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -144,7 +176,7 @@ function ViewPost(props) {
                                                     </td>
 
                                                 }
-                                                {/* <td>{new Boolean(i.sold).toString()}</td> */}
+                                                
                                                 {
                                                     
                                                     (cookies.get("email") && data.email === cookies.get("email"))
@@ -164,7 +196,6 @@ function ViewPost(props) {
                                                                 <InputGroup.Checkbox aria-label="Checkbox for following text input" onClick={() => {soldbutton(index)}}/>
                                                             </InputGroup.Prepend>
                                                         </InputGroup>
-                                                        {/* <Button size="sm" variant="warning" onClick={() => {soldbutton(index)}}>In Stock</Button> */}
                                                     </td>
                                                     : ""
                                                 }
@@ -185,27 +216,17 @@ function ViewPost(props) {
                         Comments
                     </Card.Title>
 
-
-
                     <Form>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Control as="textarea" placeholder="Write a comment"  rows={3} />
+                            <Form.Control as="textarea" placeholder="Write a comment"  rows={3} onChange={(e) => {setMessage(e.target.value)}} value={message}/>
                         </Form.Group>
                     </Form>
                     <Button variant="primary" onClick={() => {commentbutton()}}>Post</Button>{' '}
                     
                 </Card.Body>
             </Card>
-
-
-            
+   
         </Container>
-
-
-
-
-
-
     )
 }
 
