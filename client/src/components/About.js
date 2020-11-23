@@ -8,6 +8,11 @@ import "../App.css";
 
 function About() {
 
-    <h1>Sell Easy</h1>
+    return (
+        <h1>Sell Easy</h1>
+    )
+    
 
 }
+
+export default About;

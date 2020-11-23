@@ -8,6 +8,7 @@ import Account from './components/Account';
 import CreatePost from './components/CreatePost';
 import { UserProvider } from './context/UserContext';
 import ViewPost from './components/ViewPost';
+import About from './components/About';
 
 function App() {
 
