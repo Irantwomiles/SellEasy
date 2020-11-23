@@ -1,9 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&family=Quicksand&display=swap');
 
 
 
 
 h1 {
     font-family: 'Quicksand', sans-serif;
+    text-align: center;
 }
 
+h2 {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    vertical-align: middle;
+}
+
+.title {
+    font-size: 125px;
+    padding: 10px;
+    margin-top: 10px;
+    vertical-align: middle;
+}
+
+.desc {
+    font-size: 23px;
+}
+
+body {
+    background-color: tan;
+}
+
+.Logo {
+    /* height:100%;
+    width: 100%; */
+}
+
+.pic {
+    max-width: 100%;
+    max-height: 100%;
+}
