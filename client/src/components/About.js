@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Container} from 'react-bootstrap';
-
 import Cookies from 'universal-cookie';
 import "../App.css";
 import logo from '../shoppingbags.png';

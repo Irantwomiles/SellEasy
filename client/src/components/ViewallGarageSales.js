@@ -9,7 +9,6 @@ function ViewallGarageSales(){
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const cookies = new Cookies();
-c
     let history = useHistory();
 
     const visitPage = (id) => {
