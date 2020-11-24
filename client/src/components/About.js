@@ -21,6 +21,7 @@ function About() {
             <h1 className="title">SellEasy</h1>
             <h2 className="desc">Create listings, view items, and many more! Sign up for a free account today!</h2>
             <img className="pic" src={logo} alt="Logo" />
+            <h3 class="credit">Created by Shayan Ghofrany, Tracy Boodhoo, Andre Javan</h3>
         </Container>
         
     )
