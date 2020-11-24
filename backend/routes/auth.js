@@ -58,7 +58,7 @@ authRouter.post('/login', function(req, res) {
         
                         newToken.save(function(err) {
                             if(err) {
-                                res.send({status: 500, message: "error while creating login token."});
+                                res.sendStatus(500);
                                 return;
                             }
                             

@@ -32,7 +32,6 @@ function Account() {
                 history.push("/");
             }
         }).catch(error => {
-            console.log("This person is not logged in")
         }) 
     }
 

@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Container, Card, Table, Button, InputGroup } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { Container} from 'react-bootstrap';
+
 import Cookies from 'universal-cookie';
 import "../App.css";
 import logo from '../shoppingbags.png';
 
 
 function About() {
+
+    let cookies = new Cookies();
+
+    useEffect(() => {
+        if(!cookies.get("zipcode")) {
+            cookies.set("zipcode", "27514", {path: "/"});
+        }
+    }, [])
 
     return (
         <Container> 
