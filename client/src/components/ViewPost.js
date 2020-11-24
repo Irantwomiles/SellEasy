@@ -13,7 +13,7 @@ function ViewPost(props) {
 
     useEffect(() => {
 
-        const URL = `http://localhost:5000/api/post/get/${props.match.params.id}`;
+        const URL = `https://selleasy.herokuapp.com/api/post/get/${props.match.params.id}`;
 
         (async () => {
 
@@ -42,7 +42,7 @@ function ViewPost(props) {
             _id: data._id
         }
 
-        axios.post('http://localhost:5000/api/post/update', {
+        axios.post('https://selleasy.herokuapp.com/api/post/update', {
             data: obj
         }, {
             headers: {
@@ -84,7 +84,7 @@ function ViewPost(props) {
             _id: data._id
         }
 
-        axios.post('http://localhost:5000/api/post/comments', {
+        axios.post('https://selleasy.herokuapp.com/api/post/comments', {
             data: obj
         }, {
             headers: {
