@@ -52,7 +52,7 @@ function SignIn() {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                setShow(true);
             });
         }
 
@@ -71,9 +71,9 @@ function SignIn() {
             {
                 show ?
                 <Alert className="mt-3" variant="danger" onClose={() => setShow(false)} dismissible>
-                    <Alert.Heading>You must fill out all fields!</Alert.Heading>
+                    <Alert.Heading>Error!</Alert.Heading>
                     <p>
-                        Your Email and/or Password field was not filled out, please fill them out before attempting to login.
+                        There was an error while trying to log you into the website.
                     </p>
                 </Alert>
                 : ""
