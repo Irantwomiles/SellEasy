@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Container, Card, Table, Button, InputGroup, Form } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -14,8 +13,7 @@ function ViewPost(props) {
 
     useEffect(() => {
 
-
-        const URL = `https://selleasy.herokuapp.com/api/post/get/${props.match.params.id}`;
+        const URL = `http://localhost:5000/api/post/get/${props.match.params.id}`;
 
         (async () => {
 
@@ -29,15 +27,8 @@ function ViewPost(props) {
 
     }, []);
 
-    useEffect(() => {
-
-        console.log(data);   
-    }, [data]);
-
-
     const soldbutton = (index) => {
       
-
         let arr = data.items;
         arr[index].sold = !arr[index].sold;
 
@@ -79,7 +70,7 @@ function ViewPost(props) {
         arr.push({
             email: cookies.get("email"),
             message: message,
-            createdAt: new Date.now()
+            createdAt: new Date().getTime()
         })
 
         let obj = {
@@ -101,12 +92,13 @@ function ViewPost(props) {
             }
         }).then(response => {
             if(response.status === 200) {
-                console.log(response)
                 setData(obj);
             }
         }).catch(error => {
             console.log(error)
         }) 
+
+        setMessage("");
 
     }
 
@@ -133,7 +125,7 @@ function ViewPost(props) {
                                         {
                                             (cookies.get("email") && data.email === cookies.get("email")) ?
                                             <th>Sold</th>
-                                            : ""
+                                            : <th></th>
 
                                         }
                                         
@@ -179,7 +171,7 @@ function ViewPost(props) {
                                                             </InputGroup.Prepend>
                                                         </InputGroup>
                                                     </td>
-                                                    : ""
+                                                    : <td></td>
                                                 }
                                             </tr>
                                         ))
@@ -192,31 +184,38 @@ function ViewPost(props) {
                 </Card>
             }
 
-            <Card>
+            <Card className="mt-3">
                 <Card.Body>
                     <Card.Title>
                         Comments
                     </Card.Title>
                     {
+                        (typeof data.comments === 'undefined') || data.comments.length === 0 ? "" :
                         data.comments.map(comm => (
-                            <Card>
-                            <Card.Body>
-                                <Card.Subtitle>{comm.email}, {comm.createdAt}</Card.Subtitle>
-                                <Card.Text>{comm.message}</Card.Text>
-                            </Card.Body>
-                        </Card>
+                            <Card key={Math.random()} className="mt-1 mb-1">
+                                <Card.Body>
+                                    <Card.Subtitle>{comm.email} <span className="text-muted">{new Date(comm.createdAt).toLocaleDateString("en-US")}</span></Card.Subtitle>
+                                    <Card.Text>{comm.message}</Card.Text>
+                                </Card.Body>
+                            </Card>
                         )) 
                     }
                     
 
-                   
+                   {
+                       (cookies.get("token") && cookies.get("email")) ?
+                        <>
+                            <Form>
+                                <Form.Group controlId="exampleForm.ControlTextarea1">
+                                    <Form.Control as="textarea" placeholder="Write a comment"  rows={3} onChange={(e) => {setMessage(e.target.value)}} value={message}/>
+                                </Form.Group>
+                            </Form>
+                            <Button variant="primary" onClick={() => {commentbutton()}}>Post</Button>
+                        </>
+                       :
+                       ""
+                   }
 
-                    <Form>
-                        <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Control as="textarea" placeholder="Write a comment"  rows={3} onChange={(e) => {setMessage(e.target.value)}} value={message}/>
-                        </Form.Group>
-                    </Form>
-                    <Button variant="primary" onClick={() => {commentbutton()}}>Post</Button>
                     
                 </Card.Body>
             </Card>

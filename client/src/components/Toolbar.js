@@ -109,7 +109,7 @@ function Toolbar() {
 
             </Nav>
         </Container>
-        <Container className="mt-2" style={{backgroundColor: "rgb(247,247,249)"}}>
+        <Container className="mt-2">
             <Row>
                 {
                     data.map((item) => (

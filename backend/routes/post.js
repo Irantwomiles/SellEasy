@@ -157,8 +157,6 @@ postRouter.post('/update', authenticateToken, function(req, res) {
     let user = req.user.email;
     let doc = req.body.data
 
-    console.log(doc)
-
     if(doc && user && doc.email === user) {
 
         Posts.findOneAndUpdate({_id: doc._id}, {items: doc.items}, {new: true}, (err, data) => {

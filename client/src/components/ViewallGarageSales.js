@@ -21,7 +21,7 @@ function ViewallGarageSales(){
     useEffect(() => {
 
         if(!cookies.get("zipcode")) {
-            cookies.set("zipcode", "-1", {path: "/"});
+            cookies.set("zipcode", "27514", {path: "/"});
         }
 
         (async () => {
@@ -40,7 +40,7 @@ function ViewallGarageSales(){
     }, []);
     
     return (
-        <Container style={{backgroundColor: "rgb(247,247,249)", height: "100vh"}}>
+        <Container style={{height: "100vh"}}>
             <Row className="justify-content-md-center">
            {
             loading || data.length === 0 ? 
