@@ -9,9 +9,7 @@ function ViewallGarageSales(){
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const cookies = new Cookies();
-
-    const GET_RECENT_DATA_URL = `https://selleasy.herokuapp.com/api/post/latest/${cookies.get("zipcode") && cookies.get("zipcode") !== "undefined" ? cookies.get("zipcode") : "-1"}`;
-
+c
     let history = useHistory();
 
     const visitPage = (id) => {
@@ -20,9 +18,11 @@ function ViewallGarageSales(){
 
     useEffect(() => {
 
-        if(!cookies.get("zipcode") || cookies.get("zipcode") === "undefined") {
+        if(!cookies.get("zipcode") || isNaN(cookies.get("zipcode")) || cookies.get("zipcode") === "undefined") {
             cookies.set("zipcode", "27514", {path: "/"});
         }
+
+        const GET_RECENT_DATA_URL = `https://selleasy.herokuapp.com/api/post/latest/${cookies.get("zipcode")}`;
 
         (async () => {
 

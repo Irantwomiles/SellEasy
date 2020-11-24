@@ -11,7 +11,7 @@ function About() {
     let cookies = new Cookies();
 
     useEffect(() => {
-        if(!cookies.get("zipcode") || cookies.get("zipcode") === "undefined") {
+        if(!cookies.get("zipcode") || isNaN(cookies.get("zipcode")) || cookies.get("zipcode") === "undefined") {
             cookies.set("zipcode", "27514", {path: "/"});
         }
     }, [])
