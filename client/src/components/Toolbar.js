@@ -16,6 +16,10 @@ function Toolbar() {
 
     useEffect(() => {
 
+        if(!cookies.get("zipcode")) {
+            cookies.set("zipcode", "27514", {path: "/"});
+        }
+
         let email = cookies.get('email');
         let token = cookies.get('token');
 
