@@ -14,14 +14,14 @@ function CreatePost() {
     const [quantity, setQuantity] = useState("");
     const [items, setItems] = useState([]);
 
-    const [show, setShow] = useState({title: "Somethings Wrong!", message: "Filled out", type: "danger", show: false});
+    const [show, setShow] = useState({title: "Somethings Wrong!", message: "Please enter all required fields.", type: "danger", show: false});
 
     const cookies = new Cookies();
     let history = useHistory();
 
     const addItem = () => {
         if(itemName.length === 0 || price.length === 0 || quantity.length === 0) {
-            setShow({title: "Somethings Wrong!", message: "Filled out", type: "danger", show: true});
+            setShow({title: "Somethings Wrong!", message: "Make sure to create an item!", type: "danger", show: true});
             return;
         }
 
